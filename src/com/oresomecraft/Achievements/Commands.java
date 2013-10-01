@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,7 @@ public class Commands {
     public void goalInfo(CommandContext args, CommandSender sender) {
         String arg = args.getJoinedStrings(0);
         if (!(plugin.achs.contains(arg))) {
-            sender.sendMessage(ChatColor.RED + "That achievement doesn't exist. Type /goals for the list of achievements!");
+            sender.sendMessage(ChatColor.RED + "That achievement doesn't exist. Remember, achievements are CaSeSeNsItIvE!");
             return;
         }
         for (Map.Entry<String, String> entry : plugin.criteria.entrySet()) {
@@ -79,7 +80,7 @@ public class Commands {
         } else if (arg.equalsIgnoreCase("reload") && sender.hasPermission("oresomeachievements.reload")) {
             //Nothing happens, just for perfectionism.
             sender.sendMessage(ChatColor.AQUA + "OresomeAchievements reloaded");
-        } else if (arg.equalsIgnoreCase("reset") && args.argsLength() == 2) {
+        } else if (arg.equalsIgnoreCase("reset") && args.argsLength() == 2 && sender.hasPermission("oresomeachievements.reset")){
             if (new File("plugins/OresomeAchievements/users", args.getString(1) + ".yml").isFile()) {
                 File file = new File("plugins/OresomeAchievements/users", args.getString(1) + ".yml");
                 file.delete();
