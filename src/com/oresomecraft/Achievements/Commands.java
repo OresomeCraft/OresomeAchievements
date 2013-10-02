@@ -33,7 +33,7 @@ public class Commands {
             try {
                 page = Integer.parseInt(args.getString(0));
             } catch (NumberFormatException e) {
-                sender.sendMessage(ChatColor.RED + "Usage: /achievements <page>");
+                sender.sendMessage(ChatColor.RED + "That is not a number!");
                 return;
             }
         }
@@ -53,6 +53,61 @@ public class Commands {
             }
         }
         sender.sendMessage(ChatColor.GOLD + "To see next page, type '/achievements " + (page + 1) + "'");
+    }
+
+    @Command(aliases = {"complete", "fulfilled", "completedachievements"},
+            desc = "View a players' complete achievements",
+            usage = "<player> <page>",
+            min = 0,
+            max = 2)
+    @CommandPermissions({"oresomeachievements.list"})
+    public void complete(CommandContext args, CommandSender sender) {
+        int page = 1;
+        if(args.argsLength() == 0){
+            Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " 1");
+            return;
+        }
+        String player = args.getString(0);
+        String playerActual = args.getString(0);
+        if(args.argsLength() == 1){
+            try{
+            page = Integer.parseInt(player);
+            }catch(NumberFormatException e){
+                sender.sendMessage(ChatColor.RED + "That is not a number!");
+                return;
+            }
+            Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " " + page);
+            return;
+        }
+        if(ConfigAccess.userConfigExists(playerActual) == false && args.argsLength() == 2){
+            sender.sendMessage(ChatColor.RED + "That user doesn't exist!");
+            return;
+        }
+        if (args.argsLength() == 2) {
+            try {
+                page = Integer.parseInt(args.getString(1));
+            } catch (NumberFormatException e) {
+                sender.sendMessage(ChatColor.RED + "That is not a number!");
+                return;
+            }
+        }
+        List<String> achs = ConfigAccess.loadUserConfig(player).getStringList(player+".completed");
+        int maxPage = page * 10;
+        int i = maxPage - 9;
+        sender.sendMessage(ChatColor.GOLD + player + "'s achievement list (Page " + page + ")");
+        //10 per page, so if it's page 2 it will check the array-list from 10-20.
+        boolean stopcheck = false;
+        while (i < maxPage + 1 && stopcheck == false) {
+            try {
+                sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + achs.get(i));
+                i++;
+            } catch (IndexOutOfBoundsException e) {
+                sender.sendMessage(ChatColor.RED + "No further achievements found.");
+                i++;
+                stopcheck = true;
+            }
+        }
+        sender.sendMessage(ChatColor.GOLD + "To see next page, type '/achievements " + player + " " + (page + 1) + "'");
     }
 
     @Command(aliases = {"achievementinfo", "goalinfo", "milestoneinfo", "achinfo"},

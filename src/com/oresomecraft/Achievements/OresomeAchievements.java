@@ -64,6 +64,7 @@ public class OresomeAchievements extends JavaPlugin {
         new PermaVisible();
         new N00k();
         new Manipulator();
+        new AdminYet();
     }
 
     public OresomeAchievements() {
