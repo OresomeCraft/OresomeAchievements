@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.ConfigAccess;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -33,7 +34,7 @@ public class BigStreak extends OAchievement implements IOAchievement, Listener {
         if (event.getEntity().getKiller() instanceof Player) {
             BattlePlayer p = BattlePlayer.getBattlePlayer(event.getEntity().getKiller());
             if(p.getKillStreak() > 49){
-            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward);
+            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
             }
         }
     }

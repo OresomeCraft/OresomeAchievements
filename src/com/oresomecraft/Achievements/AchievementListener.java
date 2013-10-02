@@ -1,14 +1,18 @@
 package com.oresomecraft.Achievements;
 
+import com.oresomecraft.Achievements.event.AchievementCheckpointEvent;
 import com.oresomecraft.Achievements.event.AchievementFulfilEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -16,6 +20,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class AchievementListener implements Listener {
 
@@ -28,30 +33,41 @@ public class AchievementListener implements Listener {
 
     @EventHandler
     public void fulfilAchievement(AchievementFulfilEvent event) {
-        YamlConfiguration config = new YamlConfiguration();
-        config = ConfigAccess.loadUserConfig(event.getPlayer().getName());
-        List<String> previousAchievements = config.getStringList(event.getPlayer().getName() + ".completed");
-        if (previousAchievements.contains(event.getAchievementName())) return;
-        event.getPlayer().sendMessage(ChatColor.YELLOW + "ACHIEVEMENT GET!");
-        Firework firework = (Firework)event.getPlayer().getWorld().spawnEntity(event.getPlayer().getLocation(), EntityType.FIREWORK);
+        YamlConfiguration config = event.getConfig();
+        List<String> completed = config.getStringList(event.getPlayer().getName()+".completed");
+        if(completed.contains(event.getAchievementName())) return;
+        awardAchievement(event.getPlayer(), event.getAchievementName(), event.getCriteria(), event.getIncrement(), event.getReward(), event.getType());
+        completed.add(event.getAchievementName());
+        config.set(event.getPlayer().getName()+".completed", completed);
+        ConfigAccess.saveUserConfig(config, event.getPlayer().getName());
+
+    }
+
+    @EventHandler
+    public void checkpointAchievement(AchievementCheckpointEvent event) {
+        event.getPlayer().sendMessage(ChatColor.YELLOW + "########" + ChatColor.GOLD + "ORESOMEACHIEVEMENTS" + ChatColor.YELLOW + "########");
+        event.getPlayer().sendMessage(ChatColor.GOLD + "                   Keep going!");
+        event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "You are doing great with the " + ChatColor.AQUA +
+                event.getAchievementName() + ChatColor.DARK_AQUA + " achievement!");
+        event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "Amount: " + ChatColor.AQUA + event.getIncrement());
+        event.getPlayer().sendMessage(ChatColor.YELLOW + "###################################");
+    }
+
+    private void awardAchievement(Player player, String name, String criteria, int increment, int reward, OAType type){
+        player.sendMessage(ChatColor.YELLOW + "########" + ChatColor.GOLD + "ORESOMEACHIEVEMENTS" + ChatColor.YELLOW + "########");
+        player.sendMessage(ChatColor.YELLOW + "ACHIEVEMENT GET!");
+        Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK);
         FireworkMeta meta = firework.getFireworkMeta();
-        meta.setPower(5);
-        FireworkEffect effect = FireworkEffect.builder().flicker(true).withColor(Color.YELLOW).trail(true).build();
+        meta.setPower(1);
+        FireworkEffect effect = FireworkEffect.builder().flicker(true).withColor(Color.YELLOW).trail(true).with(FireworkEffect.Type.BALL_LARGE).build();
         meta.addEffect(effect);
         firework.setFireworkMeta(meta);
-        event.getPlayer().sendMessage(ChatColor.AQUA + event.getAchievementName());
-        event.getPlayer().sendMessage(ChatColor.DARK_AQUA + event.getCriteria());
-        if (event.getType() == OAType.INCREMENTAL) {
-            event.getPlayer().sendMessage(ChatColor.DARK_AQUA + "Amount: " + ChatColor.AQUA + event.getIncrement());
+        player.sendMessage(ChatColor.AQUA + name + ChatColor.DARK_AQUA + " (" + criteria + ")");
+        if (type == OAType.INCREMENTAL) {
+            player.sendMessage(ChatColor.DARK_AQUA + "Amount: " + ChatColor.AQUA + increment);
         }
-        Access.awardPoints(event.getReward());
-        event.getPlayer().sendMessage(ChatColor.GREEN + "You were awarded " + event.getReward() + " points!");
-        previousAchievements.add(event.getAchievementName());
-        config.set(event.getPlayer().getName() + ".completed", previousAchievements);
-        try {
-            config.save(new File("plugins/OresomeAchievements/users/", event.getPlayer().getName() + ".yml"));
-        } catch (IOException e) {
-            e.printStackTrace();  //Meh, this isn't retard proof.
-        }
+        Access.awardPoints(reward);
+        player.sendMessage(ChatColor.GREEN + "You were awarded " + reward + " points!");
+        player.sendMessage(ChatColor.YELLOW + "###################################");
     }
 }

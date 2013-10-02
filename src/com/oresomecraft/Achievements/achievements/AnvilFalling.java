@@ -4,23 +4,22 @@ import com.oresomecraft.Achievements.ConfigAccess;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class FistsOfFury extends OAchievement implements IOAchievement, Listener {
+public class AnvilFalling extends OAchievement implements IOAchievement, Listener {
 
-    public FistsOfFury() {
+    public AnvilFalling() {
         super.initiate(this, name, type, criteria, reward);
     }
 
     //Objective details
-    String name = "Fists of Fury";
+    String name = "Anvil Falling";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Kill another player with your fists!";
-    int reward = 20;
+    String criteria = "Die from 200+ blocks fall damage!";
+    int reward = 5;
 
     public void readyAchievement() {
         //Don't need anything here yet;
@@ -29,8 +28,8 @@ public class FistsOfFury extends OAchievement implements IOAchievement, Listener
     //Make your own code to set off the achievement.
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
-        if (event.getEntity().getKiller() instanceof Player && event.getEntity().getKiller().getItemInHand().getType() == Material.AIR) {
-            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
+        if (event.getEntity().getLastDamageCause().getCause() == DamageCause.FALL && event.getEntity().getFallDistance() >= 200) {
+            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getName()));
         }
     }
 }

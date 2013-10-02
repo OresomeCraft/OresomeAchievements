@@ -9,17 +9,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerLevelChangeEvent;
 
-public class FistsOfFury extends OAchievement implements IOAchievement, Listener {
+public class Experienced extends OAchievement implements IOAchievement, Listener {
 
-    public FistsOfFury() {
+    public Experienced() {
         super.initiate(this, name, type, criteria, reward);
     }
 
     //Objective details
-    String name = "Fists of Fury";
+    String name = "Experienced";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Kill another player with your fists!";
+    String criteria = "Get 30 levels of EXP on any map!";
     int reward = 20;
 
     public void readyAchievement() {
@@ -28,9 +29,9 @@ public class FistsOfFury extends OAchievement implements IOAchievement, Listener
 
     //Make your own code to set off the achievement.
     @EventHandler
-    public void checkDeath(PlayerDeathEvent event) {
-        if (event.getEntity().getKiller() instanceof Player && event.getEntity().getKiller().getItemInHand().getType() == Material.AIR) {
-            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
+    public void checkDeath(PlayerLevelChangeEvent event) {
+        if (event.getNewLevel() >= 30) {
+            callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward, ConfigAccess.loadUserConfig(event.getPlayer().getName()));
         }
     }
 }

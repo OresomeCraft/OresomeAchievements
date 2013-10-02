@@ -1,8 +1,10 @@
 package com.oresomecraft.Achievements;
 
+import com.oresomecraft.Achievements.event.AchievementCheckpointEvent;
 import com.oresomecraft.Achievements.event.AchievementFulfilEvent;
 import com.oresomecraft.Achievements.event.ReadyAchievementsEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,8 +49,12 @@ public abstract class OAchievement implements Listener {
         this.award = award;
     }
 
-    protected final void callAchievementGet(String name, OAType type, String criteria, Player player, int increment, int reward) {
-        Bukkit.getPluginManager().callEvent(new AchievementFulfilEvent(player, name, increment, criteria, reward, type));
+    protected final void callAchievementGet(String name, OAType type, String criteria, Player player, int increment, int reward, YamlConfiguration config) {
+        Bukkit.getPluginManager().callEvent(new AchievementFulfilEvent(player, name, increment, criteria, reward, type, config));
+    }
+
+    protected final void callAchievementCheckpoint(String name, OAType type, String criteria, Player player, int increment) {
+        Bukkit.getPluginManager().callEvent(new AchievementCheckpointEvent(player, name, increment, criteria, type));
     }
 
     private static void addMap(String name) {

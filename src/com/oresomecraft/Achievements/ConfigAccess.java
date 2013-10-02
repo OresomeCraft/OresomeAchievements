@@ -36,4 +36,8 @@ public class ConfigAccess {
         }
     }
 
+    public static boolean userConfigExists(String name){
+        return new File("plugins/OresomeAchievements/users/", name + ".yml").isFile();
+    }
+
 }

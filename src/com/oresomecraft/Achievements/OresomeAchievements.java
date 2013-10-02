@@ -13,9 +13,11 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -30,18 +32,35 @@ public class OresomeAchievements extends JavaPlugin {
     ;
     public ArrayList<String> achs = new ArrayList<String>();
     public HashMap<String, String> criteria = new HashMap<String, String>();
+    private static ArrayList<OAchievement> achList = new ArrayList<OAchievement>();
 
     public void onEnable() {
         registerCommands();
 
         //Achievement instances
-        new FistsOfFury();
-        new BigStreak();
+        loadAchs();
 
         //Listener instances
         new JoinListener(this);
         new AchievementListener(this);
         Bukkit.getPluginManager().callEvent(new ReadyAchievementsEvent());
+    }
+
+    protected void loadAchs(){
+        //Make a protected method that loads the maps
+        new FistsOfFury();
+        new Addicted();
+        new BigStreak();
+        new Experienced();
+        new AnvilFalling();
+        new Nimble();
+        new Builder();
+        new Crafter();
+        new Demolition();
+        new OverPowered();
+        new MillionVolts();
+        new BlastProof();
+        new Torture();
     }
 
     public OresomeAchievements() {
