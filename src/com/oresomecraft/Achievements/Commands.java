@@ -70,13 +70,18 @@ public class Commands {
         String player = args.getString(0);
         String playerActual = args.getString(0);
         if(args.argsLength() == 1){
+            if(ConfigAccess.userConfigExists(player)){
+                Bukkit.dispatchCommand(sender, "complete " + player + " " + page);
+                return;
+            }
             try{
             page = Integer.parseInt(player);
+            Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " " + page);
             }catch(NumberFormatException e){
+                Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " " + page);
                 sender.sendMessage(ChatColor.RED + "That is not a number!");
                 return;
             }
-            Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " " + page);
             return;
         }
         if(ConfigAccess.userConfigExists(playerActual) == false && args.argsLength() == 2){
