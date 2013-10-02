@@ -61,6 +61,9 @@ public class OresomeAchievements extends JavaPlugin {
         new MillionVolts();
         new BlastProof();
         new Torture();
+        new PermaVisible();
+        new N00k();
+        new Manipulator();
     }
 
     public OresomeAchievements() {
