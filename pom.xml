@@ -49,7 +49,6 @@
                                 <includes>
                                     <include>org.reflections:reflections</include>
                                     <include>com.sk89q:sk89q-command-framework</include>
-                                    <include>com.oresomecraft:OresomeBattlesAPI</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
