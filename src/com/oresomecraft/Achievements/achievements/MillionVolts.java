@@ -31,10 +31,14 @@ public class MillionVolts extends OAchievement implements IOAchievement, Listene
     public void checkEntity(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
-            DamageCause cause = p.getLastDamageCause().getCause();
+            try {
+                DamageCause cause = p.getLastDamageCause().getCause();
                 if (cause == DamageCause.LIGHTNING) {
                     callAchievementGet(name, type, criteria, p, 0, reward, ConfigAccess.loadUserConfig(p.getName()));
                 }
+            }catch(NullPointerException e){
+                //Something goes wrong sometimes. Just ignore the error and get on with it.
             }
         }
+    }
 }

@@ -30,11 +30,15 @@ public class BlastProof extends OAchievement implements IOAchievement, Listener 
     public void checkEntity(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
+            try{
             EntityDamageEvent.DamageCause cause = p.getLastDamageCause().getCause();
             if (cause == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
                 if (p.getLastDamage() > 14 && p.isDead() == false) {
                     callAchievementGet(name, type, criteria, p, 0, reward, ConfigAccess.loadUserConfig(p.getName()));
                 }
+            }
+            }catch(NullPointerException e){
+                //Sometimes this doesn't check, and I don't want it spamming the console with a null pointer.
             }
         }
     }

@@ -5,6 +5,7 @@ public enum OAType {
 
     INCREMENTAL,
     OBJECTIVE,
-    FORCED
+    FORCED,
+    CHECK
 
 }

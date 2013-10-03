@@ -32,7 +32,6 @@ public class OresomeAchievements extends JavaPlugin {
     ;
     public ArrayList<String> achs = new ArrayList<String>();
     public HashMap<String, String> criteria = new HashMap<String, String>();
-    private static ArrayList<OAchievement> achList = new ArrayList<OAchievement>();
 
     public void onEnable() {
         registerCommands();
@@ -61,10 +60,21 @@ public class OresomeAchievements extends JavaPlugin {
         new MillionVolts();
         new BlastProof();
         new Torture();
-        new PermaVisible();
         new N00k();
         new Manipulator();
         new AdminYet();
+        new Cursed();
+        new Naughty();
+        new GlitchingI();
+        new GlitchingII();
+        new GlitchingIII();
+        new Ranked();
+        new FreeTransport();
+        new Reckless();
+        new GoneFishin();
+        new GettingAround();
+        new Sturdy();
+        new WalkItOff();
     }
 
     public OresomeAchievements() {
@@ -73,6 +83,8 @@ public class OresomeAchievements extends JavaPlugin {
 
     public void onDisable() {
         HandlerList.unregisterAll(this);
+        System.gc();
+        //Unsafe GC, remove if you want @Zachoz.
     }
 
     public static OresomeAchievements getInstance() {

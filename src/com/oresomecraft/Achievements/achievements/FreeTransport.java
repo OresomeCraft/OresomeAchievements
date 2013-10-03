@@ -7,20 +7,20 @@ import com.oresomecraft.Achievements.OAchievement;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
-public class Demolition extends OAchievement implements IOAchievement, Listener {
+public class FreeTransport extends OAchievement implements IOAchievement, Listener {
 
-    public Demolition() {
+    public FreeTransport() {
         super.initiate(this, name, type, criteria, reward);
     }
 
     //Objective details
-    String name = "Demolition";
+    String name = "Free Transport";
     OAType type = OAType.INCREMENTAL;
-    String criteria = "Break 1000 blocks!";
-    int reward = 30;
+    String criteria = "Get teleported between worlds 500 times!";
+    int reward = 20;
 
     public void readyAchievement() {
         //Don't need anything here yet;
@@ -28,21 +28,22 @@ public class Demolition extends OAchievement implements IOAchievement, Listener 
 
     //Make your own code to set off the achievement.
     @EventHandler
-    public void checkPlace(BlockBreakEvent event) {
+    public void checkWorld(PlayerTeleportEvent event) {
         //Players may not have a config, just add a fail-safe check.
         if(ConfigAccess.userConfigExists(event.getPlayer().getName()) == false) return;
         YamlConfiguration config = ConfigAccess.loadUserConfig(event.getPlayer().getName());
         int increment = 0;
-        if(config.contains(event.getPlayer().getName()+".increments.demolition") == true){
-            increment = config.getInt(event.getPlayer().getName()+".increments.demolition");
-            config.set(event.getPlayer().getName()+".increments.demolition", increment + 1);
+        if(event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) return;
+        if(config.contains(event.getPlayer().getName()+".increments.transport") == true){
+            increment = config.getInt(event.getPlayer().getName()+".increments.transport");
+            config.set(event.getPlayer().getName()+".increments.transport", increment + 1);
         }else{
-            config.set(event.getPlayer().getName()+".increments.demolition", 1);
+            config.set(event.getPlayer().getName()+".increments.transport", 1);
         }
-        if(increment >= 1000){
+        if(increment >= 500){
             callAchievementGet(name, type, criteria, event.getPlayer(), increment, reward, config);
         }
-        if(increment == 500 || increment == 250 || increment == 750 || increment == 900){
+        if(increment == 50 || increment == 150 || increment == 350 || increment == 475){
             callAchievementCheckpoint(name, type, criteria, event.getPlayer(), increment);
         }
         ConfigAccess.saveUserConfig(config, event.getPlayer().getName());

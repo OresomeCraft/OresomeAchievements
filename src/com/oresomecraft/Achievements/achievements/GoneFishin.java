@@ -5,22 +5,23 @@ import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
 
-public class Demolition extends OAchievement implements IOAchievement, Listener {
+public class GoneFishin extends OAchievement implements IOAchievement, Listener {
 
-    public Demolition() {
+    public GoneFishin() {
         super.initiate(this, name, type, criteria, reward);
     }
 
     //Objective details
-    String name = "Demolition";
+    String name = "Gone Fishin'";
     OAType type = OAType.INCREMENTAL;
-    String criteria = "Break 1000 blocks!";
-    int reward = 30;
+    String criteria = "Catch 5 fish!";
+    int reward = 5;
 
     public void readyAchievement() {
         //Don't need anything here yet;
@@ -28,21 +29,22 @@ public class Demolition extends OAchievement implements IOAchievement, Listener 
 
     //Make your own code to set off the achievement.
     @EventHandler
-    public void checkPlace(BlockBreakEvent event) {
+    public void checkFish(PlayerFishEvent event) {
+        if(event.getCaught() == null) return;
         //Players may not have a config, just add a fail-safe check.
         if(ConfigAccess.userConfigExists(event.getPlayer().getName()) == false) return;
         YamlConfiguration config = ConfigAccess.loadUserConfig(event.getPlayer().getName());
         int increment = 0;
-        if(config.contains(event.getPlayer().getName()+".increments.demolition") == true){
-            increment = config.getInt(event.getPlayer().getName()+".increments.demolition");
-            config.set(event.getPlayer().getName()+".increments.demolition", increment + 1);
+        if(config.contains(event.getPlayer().getName()+".increments.fishing") == true){
+            increment = config.getInt(event.getPlayer().getName()+".increments.fishing");
+            config.set(event.getPlayer().getName()+".increments.fishing", increment + 1);
         }else{
-            config.set(event.getPlayer().getName()+".increments.demolition", 1);
+            config.set(event.getPlayer().getName()+".increments.fishing", 1);
         }
-        if(increment >= 1000){
+        if(increment >= 5){
             callAchievementGet(name, type, criteria, event.getPlayer(), increment, reward, config);
         }
-        if(increment == 500 || increment == 250 || increment == 750 || increment == 900){
+        if(increment == 3){
             callAchievementCheckpoint(name, type, criteria, event.getPlayer(), increment);
         }
         ConfigAccess.saveUserConfig(config, event.getPlayer().getName());

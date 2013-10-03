@@ -38,13 +38,20 @@ public class Commands {
             }
         }
         int maxPage = page * 10;
-        int i = maxPage - 9;
+        int i = maxPage - 10;
         sender.sendMessage(ChatColor.GOLD + "Achievements List (Page " + page + ")");
         //10 per page, so if it's page 2 it will check the array-list from 10-20.
         boolean stopcheck = false;
-        while (i < maxPage + 1 && stopcheck == false) {
+        while (i < maxPage && stopcheck == false) {
             try {
-                sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i));
+                String done = ChatColor.GREEN + "" +ChatColor.BOLD + " +";
+                String notdone = ChatColor.RED + "" + ChatColor.BOLD + " -";
+                List<String> list = ConfigAccess.loadUserConfig(sender.getName()).getStringList(sender.getName()+".completed");
+                if(list.contains(plugin.achs.get(i))){
+                sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i) + done);
+                }else{
+                    sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i) + notdone);
+                }
                 i++;
             } catch (IndexOutOfBoundsException e) {
                 sender.sendMessage(ChatColor.RED + "No further achievements found.");
@@ -98,11 +105,11 @@ public class Commands {
         }
         List<String> achs = ConfigAccess.loadUserConfig(player).getStringList(player+".completed");
         int maxPage = page * 10;
-        int i = maxPage - 9;
+        int i = maxPage - 10;
         sender.sendMessage(ChatColor.GOLD + player + "'s achievement list (Page " + page + ")");
         //10 per page, so if it's page 2 it will check the array-list from 10-20.
         boolean stopcheck = false;
-        while (i < maxPage + 1 && stopcheck == false) {
+        while (i < maxPage && stopcheck == false) {
             try {
                 sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + achs.get(i));
                 i++;

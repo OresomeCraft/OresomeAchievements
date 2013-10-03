@@ -32,9 +32,13 @@ public class BigStreak extends OAchievement implements IOAchievement, Listener {
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
         if (event.getEntity().getKiller() instanceof Player) {
+            try{
             BattlePlayer p = BattlePlayer.getBattlePlayer(event.getEntity().getKiller());
-            if(p.getKillStreak() > 49){
+            if(p.getKillStreak() >= 50){
             callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
+            }
+            }catch(NoClassDefFoundError e){
+                //Ignore this achievement if this is being locally tested.
             }
         }
     }

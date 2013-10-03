@@ -4,24 +4,21 @@ import com.oresomecraft.Achievements.ConfigAccess;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
+import com.oresomecraft.OresomeBattles.api.BattlePlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collection;
+public class GlitchingI extends OAchievement implements IOAchievement, Listener {
 
-public class PermaVisible extends OAchievement implements IOAchievement, Listener {
-
-    public PermaVisible() {
+    public GlitchingI() {
         super.initiate(this, name, type, criteria, reward);
     }
 
     //Objective details
-    String name = "Indiscreet";
+    String name = "Glitching I";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Die whilst invisible!";
+    String criteria = "Die as a spectator!";
     int reward = 5;
 
     public void readyAchievement() {
@@ -31,11 +28,15 @@ public class PermaVisible extends OAchievement implements IOAchievement, Listene
     //Make your own code to set off the achievement.
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
-        Collection<PotionEffect> effects = event.getEntity().getActivePotionEffects();
-        boolean check = false;
-        for (PotionEffect effect : effects) {
-            if (effect.getType().equals(PotionEffectType.INVISIBILITY)) check = true;
+        if (event.getEntity() != null) {
+            try {
+                BattlePlayer p = BattlePlayer.getBattlePlayer(event.getEntity());
+                if (p.isSpectator()) {
+                    callAchievementGet(name, type, criteria, event.getEntity(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getName()));
+                }
+            } catch (NoClassDefFoundError e) {
+                //Ignore this achievement if this is being locally tested.
+            }
         }
-        callAchievementGet(name, type, criteria, event.getEntity(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getName()));
     }
 }
