@@ -22,4 +22,4 @@ to compile use the following command:
 
 ```mvn clean install```
 
-**Note:** Plugin requires OresomeBattles to function and hence will not function on your own servers.
+**Note:** This plugin can function on your own server!
