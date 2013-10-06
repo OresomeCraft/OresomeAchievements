@@ -22,7 +22,7 @@ public class EpicDive extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "Epic Dive";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Survive a 50+ block fall in water!";
+    String criteria = "Survive a fall of a certain distance in water!";
     int reward = 15;
 
     public void readyAchievement() {
@@ -34,7 +34,7 @@ public class EpicDive extends OAchievement implements IOAchievement, Listener {
     public void checkDeath(PlayerMoveEvent event) {
         if (event.getPlayer().getWorld().getBlockAt(event.getPlayer().getLocation()).getRelative(BlockFace.DOWN).getType() == Material.WATER ||
                 event.getPlayer().getWorld().getBlockAt(event.getPlayer().getLocation()).getRelative(BlockFace.DOWN).getType() == Material.STATIONARY_WATER){
-            if(event.getPlayer().getFallDistance() >= 50 && event.getPlayer().getGameMode() == GameMode.SURVIVAL){
+            if((int)event.getPlayer().getFallDistance() >= 50 && event.getPlayer().getGameMode() == GameMode.SURVIVAL){
                 callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward, ConfigAccess.loadUserConfig(event.getPlayer().getName()));
             }
         }

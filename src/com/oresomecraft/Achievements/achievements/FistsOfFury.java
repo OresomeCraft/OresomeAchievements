@@ -30,9 +30,11 @@ public class FistsOfFury extends OAchievement implements IOAchievement, Listener
     //Make your own code to set off the achievement.
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
-        if (event.getEntity().getKiller() instanceof Player && event.getEntity().getKiller().getItemInHand().getType() == Material.AIR && event.getEntity().getKiller().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-            //Whew, that's one long method.
-            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
+        if (event.getEntity().getKiller() instanceof Player && event.getEntity().getKiller().getItemInHand().getType() == Material.AIR) {
+            if (event.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                //Whew, that's one long method.
+                callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
+            }
         }
     }
 }
