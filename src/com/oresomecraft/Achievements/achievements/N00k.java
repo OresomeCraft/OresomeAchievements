@@ -1,6 +1,5 @@
 package com.oresomecraft.Achievements.achievements;
 
-import com.oresomecraft.Achievements.ConfigAccess;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;

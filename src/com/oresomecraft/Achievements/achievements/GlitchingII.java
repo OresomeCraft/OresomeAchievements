@@ -1,6 +1,5 @@
 package com.oresomecraft.Achievements.achievements;
 
-import com.oresomecraft.Achievements.ConfigAccess;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -29,8 +28,8 @@ public class GlitchingII extends OAchievement implements IOAchievement, Listener
     //Make your own code to set off the achievement.
     @EventHandler
     public void checkInteract(PlayerInteractEvent event) {
-        if(event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType() == Material.AIR){
-        callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward);
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType() == Material.AIR) {
+            callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward);
         }
     }
 }

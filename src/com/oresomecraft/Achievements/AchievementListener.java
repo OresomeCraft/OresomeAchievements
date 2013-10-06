@@ -48,7 +48,6 @@ public class AchievementListener implements Listener {
         completed.add(event.getAchievementName());
         config.set(event.getPlayer().getName()+".completed", completed);
         ConfigAccess.saveUserConfig(config, event.getPlayer().getName());
-
     }
 
     @EventHandler
@@ -74,7 +73,7 @@ public class AchievementListener implements Listener {
         if (type == OAType.INCREMENTAL) {
             player.sendMessage(ChatColor.DARK_AQUA + "Amount: " + ChatColor.AQUA + increment);
         }
-        Access.awardPoints(reward);
+        Access.awardPoints(player, reward);
         player.sendMessage(ChatColor.GREEN + "You were awarded " + reward + " points!");
         player.sendMessage(ChatColor.YELLOW + "###################################");
     }

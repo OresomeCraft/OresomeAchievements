@@ -12,8 +12,15 @@ If you can code, you're welcome to have a go at coding an achievement or making 
 Users with push and pull access to this repo are:
 
 * [Zachoz](https://github.com/Zachoz)
+* [_Husky_](https://github.com/Husky--)
 * [R3creat3](https://github.com/R3creat3)
 * [psgs](https://github.com/psgs)
+
+### Changelog
+ Version 1.0
+ - User per-config YMLs
+ - Give all achievements the OAchievement object
+ - Use HashMaps for config objects
 
 ### Compiling
 

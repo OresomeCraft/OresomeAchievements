@@ -31,6 +31,9 @@ local.properties
 # PDT-specific
 .buildpath
 
+#idea
+*.iml
+.gitattributes
 
 #################
 ## Visual Studio

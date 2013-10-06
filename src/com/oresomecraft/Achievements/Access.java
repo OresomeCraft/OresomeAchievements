@@ -10,7 +10,7 @@ public class Access {
         OresomeAchievements.addCriteria(name, criteria);
     }
 
-    public static void awardPoints(int points) {
+    public static void awardPoints(org.bukkit.entity.Player p, int points) {
         //Code to award OresomeCraft Points (BattlePoints) on fulfilling a mission.
     }
 }

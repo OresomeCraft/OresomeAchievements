@@ -31,16 +31,16 @@ public class GettingAround extends OAchievement implements IOAchievement, Listen
     @EventHandler
     public void checkWorld(PlayerTeleportEvent event) {
         //Players may not have a config, just add a fail-safe check.
-        if(ConfigAccess.userConfigExists(event.getPlayer().getName()) == false) return;
+        if (ConfigAccess.userConfigExists(event.getPlayer().getName()) == false) return;
         YamlConfiguration config = ConfigAccess.loadUserConfig(event.getPlayer().getName());
-        List<String> list = config.getStringList(event.getPlayer().getName()+".lists.visited");
-        if(list.contains(event.getTo().getWorld().getName())) return;
+        List<String> list = config.getStringList(event.getPlayer().getName() + ".lists.visited");
+        if (list.contains(event.getTo().getWorld().getName())) return;
         list.add(event.getTo().getWorld().getName());
-        config.set(event.getPlayer().getName()+".lists.visited", list);
-        if(list.size() >= 20){
+        config.set(event.getPlayer().getName() + ".lists.visited", list);
+        if (list.size() >= 20) {
             callAchievementGet(name, type, criteria, event.getPlayer(), list.size(), reward);
         }
-        if(list.size() == 5 || list.size() == 20){
+        if (list.size() == 5 || list.size() == 20) {
             callAchievementCheckpoint(name, type, criteria, event.getPlayer(), list.size());
         }
         ConfigAccess.saveUserConfig(config, event.getPlayer().getName());

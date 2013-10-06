@@ -22,7 +22,7 @@ public class JoinListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, pl);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void checkConfigOnJoin(PlayerJoinEvent event) {
         YamlConfiguration config = new YamlConfiguration();
         if (new File("plugins/OresomeAchievements/users/", event.getPlayer().getName() + ".yml").isFile()) {
@@ -48,7 +48,7 @@ public class JoinListener implements Listener {
             OresomeAchievements.getInstance().getUserConfigs().remove(event.getPlayer().getName());
             OresomeAchievements.getReady().remove(event.getPlayer().getName());
         } catch (NullPointerException e) {
-            //That doesn't even exist!
+            //nullnullnullnull
         }
         //Remove instance of the user's config.
     }

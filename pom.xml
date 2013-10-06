@@ -34,7 +34,7 @@
                 </configuration>
             </plugin>
             <plugin>
-                <!-- Shade plugin: Used to include sk89q's command framework into the jar -->
+                <!-- Shade plugin: Used to include the needed stuff in the jar -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.0</version>
@@ -103,7 +103,7 @@
     </organization>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/OresomeCraft/OresomeBattlesMaps/issues</url>
+        <url>https://github.com/OresomeCraft/OresomeAchievements/issues</url>
     </issueManagement>
     <inceptionYear>2013-98-30</inceptionYear>
     <url>http://oresomecraft.com/</url>

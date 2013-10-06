@@ -1,6 +1,5 @@
 package com.oresomecraft.Achievements.achievements;
 
-import com.oresomecraft.Achievements.ConfigAccess;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -36,7 +35,7 @@ public class MillionVolts extends OAchievement implements IOAchievement, Listene
                 if (cause == DamageCause.LIGHTNING) {
                     callAchievementGet(name, type, criteria, p, 0, reward);
                 }
-            }catch(NullPointerException e){
+            } catch (NullPointerException e) {
                 //Something goes wrong sometimes. Just ignore the error and get on with it.
             }
         }

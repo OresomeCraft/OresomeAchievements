@@ -1,6 +1,5 @@
 package com.oresomecraft.Achievements.achievements;
 
-import com.oresomecraft.Achievements.ConfigAccess;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -9,8 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class EpicDive extends OAchievement implements IOAchievement, Listener {
@@ -33,8 +30,8 @@ public class EpicDive extends OAchievement implements IOAchievement, Listener {
     @EventHandler
     public void checkDeath(PlayerMoveEvent event) {
         if (event.getPlayer().getWorld().getBlockAt(event.getPlayer().getLocation()).getRelative(BlockFace.DOWN).getType() == Material.WATER ||
-                event.getPlayer().getWorld().getBlockAt(event.getPlayer().getLocation()).getRelative(BlockFace.DOWN).getType() == Material.STATIONARY_WATER){
-            if((int)event.getPlayer().getFallDistance() >= 50 && event.getPlayer().getGameMode() == GameMode.SURVIVAL){
+                event.getPlayer().getWorld().getBlockAt(event.getPlayer().getLocation()).getRelative(BlockFace.DOWN).getType() == Material.STATIONARY_WATER) {
+            if ((int) event.getPlayer().getFallDistance() >= 50 && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
                 callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward);
             }
         }
