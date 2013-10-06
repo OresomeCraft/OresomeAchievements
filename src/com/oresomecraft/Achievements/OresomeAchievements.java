@@ -74,7 +74,6 @@ public class OresomeAchievements extends JavaPlugin {
         new GoneFishin();
         new GettingAround();
         new Sturdy();
-        new WalkItOff();
         new SniperPractice();
         new EpicDive();
     }
