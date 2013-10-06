@@ -33,7 +33,7 @@ public class AdminYet extends OAchievement implements IOAchievement, Listener {
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
         if (event.getEntity().getName().equals("zachoz")) {
-            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
+            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward);
         }
     }
 }

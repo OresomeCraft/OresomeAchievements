@@ -29,7 +29,7 @@ public class AnvilFalling extends OAchievement implements IOAchievement, Listene
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
         if (event.getEntity().getLastDamageCause().getCause() == DamageCause.FALL && event.getEntity().getFallDistance() >= 200) {
-            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getName()));
+            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward);
         }
     }
 }

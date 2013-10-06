@@ -1,15 +1,14 @@
 package com.oresomecraft.Achievements.achievements;
 
-import com.oresomecraft.Achievements.ConfigAccess;
-import com.oresomecraft.Achievements.IOAchievement;
-import com.oresomecraft.Achievements.OAType;
-import com.oresomecraft.Achievements.OAchievement;
+import com.oresomecraft.Achievements.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
+
+import java.util.Map;
 
 public class GoneFishin extends OAchievement implements IOAchievement, Listener {
 
@@ -33,7 +32,12 @@ public class GoneFishin extends OAchievement implements IOAchievement, Listener 
         if(event.getCaught() == null) return;
         //Players may not have a config, just add a fail-safe check.
         if(ConfigAccess.userConfigExists(event.getPlayer().getName()) == false) return;
-        YamlConfiguration config = ConfigAccess.loadUserConfig(event.getPlayer().getName());
+        YamlConfiguration config = null;
+        for (Map.Entry<String, YamlConfiguration> entry : OresomeAchievements.getInstance().getUserConfigs().entrySet()) {
+            if (entry.getKey().equals(event.getPlayer().getName()))
+                config = entry.getValue();
+        }
+        if(config == null) return;
         int increment = 0;
         if(config.contains(event.getPlayer().getName()+".increments.fishing") == true){
             increment = config.getInt(event.getPlayer().getName()+".increments.fishing");
@@ -42,7 +46,7 @@ public class GoneFishin extends OAchievement implements IOAchievement, Listener 
             config.set(event.getPlayer().getName()+".increments.fishing", 1);
         }
         if(increment >= 5){
-            callAchievementGet(name, type, criteria, event.getPlayer(), increment, reward, config);
+            callAchievementGet(name, type, criteria, event.getPlayer(), increment, reward);
         }
         if(increment == 3){
             callAchievementCheckpoint(name, type, criteria, event.getPlayer(), increment);

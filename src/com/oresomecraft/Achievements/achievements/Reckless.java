@@ -30,7 +30,7 @@ public class Reckless extends OAchievement implements IOAchievement, Listener {
     public void checkDeath(VehicleDestroyEvent event) {
         if (event.getVehicle().getPassenger() instanceof Player) {
             Player p = (Player) event.getVehicle().getPassenger();
-            callAchievementGet(name, type, criteria, p, 0, reward, ConfigAccess.loadUserConfig(p.getName()));
+            callAchievementGet(name, type, criteria, p, 0, reward);
         }
     }
 }

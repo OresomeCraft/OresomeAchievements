@@ -32,7 +32,7 @@ public class GlitchingI extends OAchievement implements IOAchievement, Listener 
             try {
                 BattlePlayer p = BattlePlayer.getBattlePlayer(event.getEntity());
                 if (p.isSpectator()) {
-                    callAchievementGet(name, type, criteria, event.getEntity(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getName()));
+                    callAchievementGet(name, type, criteria, event.getEntity(), 0, reward);
                 }
             } catch (NoClassDefFoundError e) {
                 //Ignore this achievement if this is being locally tested.

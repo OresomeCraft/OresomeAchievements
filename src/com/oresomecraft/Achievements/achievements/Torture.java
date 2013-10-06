@@ -39,7 +39,7 @@ public class Torture extends OAchievement implements IOAchievement, Listener {
             for(PotionEffect effect : effects){
                 if(effect.getType().equals(PotionEffectType.POISON)) check = true;
             }
-            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getName()));
+            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward);
         }
     }
 }

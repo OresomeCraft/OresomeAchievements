@@ -49,8 +49,8 @@ public abstract class OAchievement implements Listener {
         this.award = award;
     }
 
-    protected final void callAchievementGet(String name, OAType type, String criteria, Player player, int increment, int reward, YamlConfiguration config) {
-        Bukkit.getPluginManager().callEvent(new AchievementFulfilEvent(player, name, increment, criteria, reward, type, config));
+    protected final void callAchievementGet(String name, OAType type, String criteria, Player player, int increment, int reward) {
+        Bukkit.getPluginManager().callEvent(new AchievementFulfilEvent(player, name, increment, criteria, reward, type));
     }
 
     protected final void callAchievementCheckpoint(String name, OAType type, String criteria, Player player, int increment) {

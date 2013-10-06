@@ -186,7 +186,7 @@ public class Commands {
         if (plugin.achs.contains(arg)) {
             for (Map.Entry<String, String> entry : plugin.criteria.entrySet()) {
                 if (entry.getKey().equals(arg)) {
-                    Bukkit.getPluginManager().callEvent(new AchievementFulfilEvent((Player) sender, arg, 0, entry.getValue(), 0, OAType.FORCED, ConfigAccess.loadUserConfig(sender.getName())));
+                    Bukkit.getPluginManager().callEvent(new AchievementFulfilEvent((Player) sender, arg, 0, entry.getValue(), 0, OAType.FORCED));
                 }
             }
         } else {

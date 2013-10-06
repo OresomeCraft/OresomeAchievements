@@ -1,14 +1,13 @@
 package com.oresomecraft.Achievements.achievements;
 
-import com.oresomecraft.Achievements.ConfigAccess;
-import com.oresomecraft.Achievements.IOAchievement;
-import com.oresomecraft.Achievements.OAType;
-import com.oresomecraft.Achievements.OAchievement;
+import com.oresomecraft.Achievements.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+
+import java.util.Map;
 
 public class FreeTransport extends OAchievement implements IOAchievement, Listener {
 
@@ -31,7 +30,12 @@ public class FreeTransport extends OAchievement implements IOAchievement, Listen
     public void checkWorld(PlayerTeleportEvent event) {
         //Players may not have a config, just add a fail-safe check.
         if(ConfigAccess.userConfigExists(event.getPlayer().getName()) == false) return;
-        YamlConfiguration config = ConfigAccess.loadUserConfig(event.getPlayer().getName());
+        YamlConfiguration config = null;
+        for (Map.Entry<String, YamlConfiguration> entry : OresomeAchievements.getInstance().getUserConfigs().entrySet()) {
+            if (entry.getKey().equals(event.getPlayer().getName()))
+                config = entry.getValue();
+        }
+        if(config == null) return;
         int increment = 0;
         if(event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) return;
         if(config.contains(event.getPlayer().getName()+".increments.transport") == true){
@@ -41,7 +45,7 @@ public class FreeTransport extends OAchievement implements IOAchievement, Listen
             config.set(event.getPlayer().getName()+".increments.transport", 1);
         }
         if(increment >= 500){
-            callAchievementGet(name, type, criteria, event.getPlayer(), increment, reward, config);
+            callAchievementGet(name, type, criteria, event.getPlayer(), increment, reward);
         }
         if(increment == 50 || increment == 150 || increment == 350 || increment == 475){
             callAchievementCheckpoint(name, type, criteria, event.getPlayer(), increment);

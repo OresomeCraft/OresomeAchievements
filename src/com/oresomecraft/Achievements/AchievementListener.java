@@ -33,7 +33,15 @@ public class AchievementListener implements Listener {
 
     @EventHandler
     public void fulfilAchievement(AchievementFulfilEvent event) {
-        YamlConfiguration config = event.getConfig();
+        YamlConfiguration config = null;
+        for (Map.Entry<String, YamlConfiguration> entry : OresomeAchievements.getInstance().getUserConfigs().entrySet()) {
+            if (entry.getKey().equals(event.getPlayer().getName()))
+                config = entry.getValue();
+        }
+        if(config == null){
+            System.out.println("ERROR: Achievement " + event.getAchievementName() + " could not be done due to null config!" );
+            return;
+        }
         List<String> completed = config.getStringList(event.getPlayer().getName()+".completed");
         if(completed.contains(event.getAchievementName())) return;
         awardAchievement(event.getPlayer(), event.getAchievementName(), event.getCriteria(), event.getIncrement(), event.getReward(), event.getType());

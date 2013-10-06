@@ -32,7 +32,7 @@ public class SniperPractice extends OAchievement implements IOAchievement, Liste
     public void checkDeath(PlayerDeathEvent event) {
         if(!(event.getEntity().getKiller() instanceof Player)) return;
         if (event.getEntity().getLocation().distance(event.getEntity().getKiller().getLocation()) >= 40) {
-            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
+            callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward);
         }
     }
 }

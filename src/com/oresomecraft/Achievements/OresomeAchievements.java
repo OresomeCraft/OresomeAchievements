@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,12 +27,13 @@ import java.util.logging.Logger;
  * @author OresomeCraft, R3creat3
  */
 public class OresomeAchievements extends JavaPlugin {
-
     public static final Logger logger = Logger.getLogger("Minecraft");
     protected static OresomeAchievements plugin;
     ;
     public ArrayList<String> achs = new ArrayList<String>();
     public HashMap<String, String> criteria = new HashMap<String, String>();
+    public HashMap<String, YamlConfiguration> configs = new HashMap<String, YamlConfiguration>();
+    public ArrayList<String> ready = new ArrayList<String>();
 
     public void onEnable() {
         registerCommands();
@@ -90,6 +92,14 @@ public class OresomeAchievements extends JavaPlugin {
 
     public static OresomeAchievements getInstance() {
         return plugin;
+    }
+
+    public static HashMap<String, YamlConfiguration> getUserConfigs(){
+        return OresomeAchievements.getInstance().configs;
+    }
+
+    public static ArrayList<String> getReady(){
+        return OresomeAchievements.getInstance().ready;
     }
 
     public static void addMap(String name) {

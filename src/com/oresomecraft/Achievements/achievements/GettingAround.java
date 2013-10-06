@@ -38,7 +38,7 @@ public class GettingAround extends OAchievement implements IOAchievement, Listen
         list.add(event.getTo().getWorld().getName());
         config.set(event.getPlayer().getName()+".lists.visited", list);
         if(list.size() >= 20){
-            callAchievementGet(name, type, criteria, event.getPlayer(), list.size(), reward, config);
+            callAchievementGet(name, type, criteria, event.getPlayer(), list.size(), reward);
         }
         if(list.size() == 5 || list.size() == 20){
             callAchievementCheckpoint(name, type, criteria, event.getPlayer(), list.size());

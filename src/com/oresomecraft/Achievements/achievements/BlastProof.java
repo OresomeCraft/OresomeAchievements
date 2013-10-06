@@ -34,7 +34,7 @@ public class BlastProof extends OAchievement implements IOAchievement, Listener 
             EntityDamageEvent.DamageCause cause = p.getLastDamageCause().getCause();
             if (cause == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
                 if (p.getLastDamage() > 14 && p.isDead() == false) {
-                    callAchievementGet(name, type, criteria, p, 0, reward, ConfigAccess.loadUserConfig(p.getName()));
+                    callAchievementGet(name, type, criteria, p, 0, reward);
                 }
             }
             }catch(NullPointerException e){

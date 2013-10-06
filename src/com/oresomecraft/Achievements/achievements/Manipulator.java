@@ -30,7 +30,7 @@ public class Manipulator extends OAchievement implements IOAchievement, Listener
     @EventHandler
     public void checkBreal(BlockBreakEvent event) {
         if (event.getBlock().getWorld().getName().equalsIgnoreCase("gravity") && event.getBlock().getType() == Material.OBSIDIAN) {
-            callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward, ConfigAccess.loadUserConfig(event.getPlayer().getName()));
+            callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward);
         }
     }
 }

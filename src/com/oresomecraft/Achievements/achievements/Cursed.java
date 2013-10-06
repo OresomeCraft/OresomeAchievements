@@ -30,7 +30,7 @@ public class Cursed extends OAchievement implements IOAchievement, Listener {
     public void checkEntity(PlayerDeathEvent event) {
         DamageCause cause = event.getEntity().getLastDamageCause().getCause();
         if (cause == DamageCause.MAGIC) {
-            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getName()));
+            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward);
         }
     }
 }

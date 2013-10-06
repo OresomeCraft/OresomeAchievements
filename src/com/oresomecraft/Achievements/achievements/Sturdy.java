@@ -31,7 +31,7 @@ public class Sturdy extends OAchievement implements IOAchievement, Listener {
         if (event.getEntity().getKiller() instanceof Player)
             if (event.getEntity().getKiller().getHealth() == 1) {
                 Player p = event.getEntity().getKiller();
-                callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(p.getName()));
+                callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward);
             }
     }
 }

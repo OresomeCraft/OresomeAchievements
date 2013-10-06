@@ -31,7 +31,7 @@ public class N00k extends OAchievement implements IOAchievement, Listener {
         if (event.getEntity().getWorld().getName().equalsIgnoreCase("spire")) {
             if (event.getEntity().getShooter() instanceof Player) {
                 Player p = (Player) event.getEntity().getShooter();
-                callAchievementGet(name, type, criteria, (Player) event.getEntity().getShooter(), 0, reward, ConfigAccess.loadUserConfig(p.getName()));
+                callAchievementGet(name, type, criteria, (Player) event.getEntity().getShooter(), 0, reward);
             }
         }
     }

@@ -49,7 +49,7 @@ public class OverPowered extends OAchievement implements IOAchievement, Listener
         if (check == 2) {
             Player p = (Player) event.getInventory().getHolder();
             String pname = p.getName();
-            callAchievementGet(name, type, criteria, (Player) event.getInventory().getHolder(), 0, reward, ConfigAccess.loadUserConfig(pname));
+            callAchievementGet(name, type, criteria, (Player) event.getInventory().getHolder(), 0, reward);
         }
     }
 }

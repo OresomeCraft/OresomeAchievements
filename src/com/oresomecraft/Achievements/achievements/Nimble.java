@@ -29,7 +29,7 @@ public class Nimble extends OAchievement implements IOAchievement, Listener {
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
         if (event.getEntity().getLastDamageCause().getCause() == DamageCause.FALL && event.getEntity().getFallDistance() < 5) {
-            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getName()));
+            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward);
         }
     }
 }

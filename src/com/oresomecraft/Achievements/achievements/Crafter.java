@@ -1,15 +1,14 @@
 package com.oresomecraft.Achievements.achievements;
 
-import com.oresomecraft.Achievements.ConfigAccess;
-import com.oresomecraft.Achievements.IOAchievement;
-import com.oresomecraft.Achievements.OAType;
-import com.oresomecraft.Achievements.OAchievement;
+import com.oresomecraft.Achievements.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+
+import java.util.Map;
 
 public class Crafter extends OAchievement implements IOAchievement, Listener {
 
@@ -31,7 +30,12 @@ public class Crafter extends OAchievement implements IOAchievement, Listener {
     @EventHandler
     public void checkPlace(CraftItemEvent event) {
         Player p = (Player)event.getWhoClicked();
-        YamlConfiguration config = ConfigAccess.loadUserConfig(p.getName());
+        YamlConfiguration config = null;
+        for (Map.Entry<String, YamlConfiguration> entry : OresomeAchievements.getInstance().getUserConfigs().entrySet()) {
+            if (entry.getKey().equals(p.getName()))
+                config = entry.getValue();
+        }
+        if(config == null) return;
         int increment = 0;
         if(config.contains(p.getName()+".increments.crafter") == true){
             increment = config.getInt(p.getName()+".increments.crafter");
@@ -40,7 +44,7 @@ public class Crafter extends OAchievement implements IOAchievement, Listener {
             config.set(p.getName()+".increments.crafter", 1);
         }
         if(increment >= 100){
-            callAchievementGet(name, type, criteria, p, increment, reward, config);
+            callAchievementGet(name, type, criteria, p, increment, reward);
         }
         if(increment == 50 || increment == 25 || increment == 75 || increment == 90){
             callAchievementCheckpoint(name, type, criteria, p, increment);

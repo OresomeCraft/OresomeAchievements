@@ -30,7 +30,7 @@ public class Ranked extends OAchievement implements IOAchievement, Listener {
     @EventHandler
     public void checkChat(AsyncPlayerChatEvent event) {
         if (event.getPlayer().getDisplayName().contains("#")){
-            callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward, ConfigAccess.loadUserConfig(event.getPlayer().getName()));
+            callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward);
         }
     }
 }

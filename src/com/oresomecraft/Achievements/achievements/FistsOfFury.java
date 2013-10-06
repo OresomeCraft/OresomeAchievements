@@ -33,7 +33,7 @@ public class FistsOfFury extends OAchievement implements IOAchievement, Listener
         if (event.getEntity().getKiller() instanceof Player && event.getEntity().getKiller().getItemInHand().getType() == Material.AIR) {
             if (event.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
                 //Whew, that's one long method.
-                callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward, ConfigAccess.loadUserConfig(event.getEntity().getKiller().getName()));
+                callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward);
             }
         }
     }

@@ -35,7 +35,7 @@ public class EpicDive extends OAchievement implements IOAchievement, Listener {
         if (event.getPlayer().getWorld().getBlockAt(event.getPlayer().getLocation()).getRelative(BlockFace.DOWN).getType() == Material.WATER ||
                 event.getPlayer().getWorld().getBlockAt(event.getPlayer().getLocation()).getRelative(BlockFace.DOWN).getType() == Material.STATIONARY_WATER){
             if((int)event.getPlayer().getFallDistance() >= 50 && event.getPlayer().getGameMode() == GameMode.SURVIVAL){
-                callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward, ConfigAccess.loadUserConfig(event.getPlayer().getName()));
+                callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward);
             }
         }
     }

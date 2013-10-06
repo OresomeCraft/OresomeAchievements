@@ -31,7 +31,7 @@ public class Experienced extends OAchievement implements IOAchievement, Listener
     @EventHandler
     public void checkDeath(PlayerLevelChangeEvent event) {
         if (event.getNewLevel() >= 30) {
-            callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward, ConfigAccess.loadUserConfig(event.getPlayer().getName()));
+            callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward);
         }
     }
 }

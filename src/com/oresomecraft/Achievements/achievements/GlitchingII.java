@@ -30,7 +30,7 @@ public class GlitchingII extends OAchievement implements IOAchievement, Listener
     @EventHandler
     public void checkInteract(PlayerInteractEvent event) {
         if(event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType() == Material.AIR){
-        callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward, ConfigAccess.loadUserConfig(event.getPlayer().getName()));
+        callAchievementGet(name, type, criteria, event.getPlayer(), 0, reward);
         }
     }
 }
