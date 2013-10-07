@@ -41,7 +41,7 @@ public class OresomeAchievements extends JavaPlugin {
     public String storageUsername = getConfig().getString("database.username");
     public String storagePassword = getConfig().getString("database.password");
     public String storageDatabase = "OresomeAchievements";
-    public String storagePrefix = "achievements_";
+    public String storagePrefix = "achievements";
 
     public void onEnable() {
         //SQL stuff

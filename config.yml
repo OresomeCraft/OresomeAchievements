@@ -1,0 +1,7 @@
+database:
+    type: "MySQL"
+    port: 3061
+    hostname: "localhost"
+    username: "root"
+    password: "password"
+
