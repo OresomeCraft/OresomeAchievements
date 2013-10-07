@@ -2,6 +2,7 @@ package com.oresomecraft.Achievements;
 
 import com.oresomecraft.Achievements.achievements.*;
 import com.oresomecraft.Achievements.event.ReadyAchievementsEvent;
+import com.oresomecraft.Achievements.persistence.DatabaseManager;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
 import org.bukkit.Bukkit;
@@ -29,13 +30,27 @@ import java.util.logging.Logger;
 public class OresomeAchievements extends JavaPlugin {
     public static final Logger logger = Logger.getLogger("Minecraft");
     protected static OresomeAchievements plugin;
-    ;
     public ArrayList<String> achs = new ArrayList<String>();
     public HashMap<String, String> criteria = new HashMap<String, String>();
     public HashMap<String, YamlConfiguration> configs = new HashMap<String, YamlConfiguration>();
     public ArrayList<String> ready = new ArrayList<String>();
 
+    public String storageType = getConfig().getString("database.type");
+    public int storagePort = getConfig().getInt("database.port");
+    public String storageHostname = getConfig().getString("database.hostname");
+    public String storageUsername = getConfig().getString("database.username");
+    public String storagePassword = getConfig().getString("database.password");
+    public String storageDatabase = "OresomeAchievements";
+    public String storagePrefix = "achievements_";
+
     public void onEnable() {
+        //SQL stuff
+        if(!DatabaseManager.load()){
+            logger.severe("Encountered an error while attempting to connect to the database.  Disabling...");
+            Bukkit.getPluginManager().disablePlugin(this);
+        }
+
+        //Register commands
         registerCommands();
 
         //Achievement instances
@@ -85,7 +100,12 @@ public class OresomeAchievements extends JavaPlugin {
     }
 
     public void onDisable() {
+        //SQL Stuff
+        DatabaseManager.getDatabase().disconnect();
+
+        //Unregister handlers
         HandlerList.unregisterAll(this);
+
         System.gc();
         //Unsafe GC, remove if you want @Zachoz.
     }

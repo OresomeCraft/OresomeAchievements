@@ -33,6 +33,7 @@ public class AchievementListener implements Listener {
 
     @EventHandler
     public void fulfilAchievement(AchievementFulfilEvent event) {
+        try{
         YamlConfiguration config = null;
         for (Map.Entry<String, YamlConfiguration> entry : OresomeAchievements.getInstance().getUserConfigs().entrySet()) {
             if (entry.getKey().equals(event.getPlayer().getName()))
@@ -48,6 +49,9 @@ public class AchievementListener implements Listener {
         completed.add(event.getAchievementName());
         config.set(event.getPlayer().getName()+".completed", completed);
         ConfigAccess.saveUserConfig(config, event.getPlayer().getName());
+        }catch(AchievementException e){
+            e.printStackTrace();
+        }
     }
 
     @EventHandler
@@ -60,7 +64,7 @@ public class AchievementListener implements Listener {
         event.getPlayer().sendMessage(ChatColor.YELLOW + "###################################");
     }
 
-    private void awardAchievement(Player player, String name, String criteria, int increment, int reward, OAType type){
+    private void awardAchievement(Player player, String name, String criteria, int increment, int reward, OAType type) throws AchievementException{
         player.sendMessage(ChatColor.YELLOW + "########" + ChatColor.GOLD + "ORESOMEACHIEVEMENTS" + ChatColor.YELLOW + "########");
         player.sendMessage(ChatColor.YELLOW + "ACHIEVEMENT GET!");
         Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK);
