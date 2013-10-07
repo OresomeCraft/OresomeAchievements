@@ -17,6 +17,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -35,15 +36,27 @@ public class OresomeAchievements extends JavaPlugin {
     public HashMap<String, YamlConfiguration> configs = new HashMap<String, YamlConfiguration>();
     public ArrayList<String> ready = new ArrayList<String>();
 
-    public String storageType = getConfig().getString("database.type");
-    public int storagePort = getConfig().getInt("database.port");
-    public String storageHostname = getConfig().getString("database.hostname");
-    public String storageUsername = getConfig().getString("database.username");
-    public String storagePassword = getConfig().getString("database.password");
-    public String storageDatabase = "OresomeAchievements";
-    public String storagePrefix = "achievements";
+    public String storageType = null;;
+    public int storagePort = 0;
+    public String storageHostname = null;
+    public String storageUsername = null;
+    public String storagePassword = null;
+    public String storageDatabase = null;
+    public String storagePrefix = null;
 
     public void onEnable() {
+        //Config stuff
+        if(!(new File("plugin/OresomeAchievements/config.yml").isFile())){
+            saveDefaultConfig();
+        }
+        storageType = getConfig().getString("database.type");
+        storagePort = getConfig().getInt("database.port");
+        storageHostname = getConfig().getString("database.hostname");
+        storageUsername = getConfig().getString("database.username");
+        storagePassword = getConfig().getString("database.password");
+        storageDatabase = "OresomeAchievements";
+        storagePrefix = "achievements";
+
         //SQL stuff
         if(!DatabaseManager.load()){
             logger.severe("Encountered an error while attempting to connect to the database.  Disabling...");

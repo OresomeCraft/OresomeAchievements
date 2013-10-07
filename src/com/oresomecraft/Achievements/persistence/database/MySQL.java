@@ -1,4 +1,5 @@
-package com.nyancraft.reportrts.persistence.database;
+package com.oresomecraft.Achievements.persistence.database;
+
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;

@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import com.nyancraft.reportrts.persistence.query.Query;
 
-import com.nyancraft.reportrts.persistence.database.MySQL;
 import com.oresomecraft.Achievements.OresomeAchievements;
+import com.oresomecraft.Achievements.persistence.database.MySQL;
+import com.oresomecraft.Achievements.persistence.query.Query;
 
 public class MySQLDB extends SQLDB {
     private MySQL db;

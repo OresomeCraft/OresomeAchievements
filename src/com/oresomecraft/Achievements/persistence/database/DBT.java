@@ -1,5 +1,5 @@
-package com.nyancraft.reportrts.persistence.database;
+package com.oresomecraft.Achievements.persistence.database;
 
 public enum DBT {
-    MySQL
+    MySQL;
 }

@@ -1,4 +1,4 @@
-package com.nyancraft.reportrts.persistence.database;
+package com.oresomecraft.Achievements.persistence.database;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
