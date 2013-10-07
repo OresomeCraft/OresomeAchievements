@@ -1,6 +1,7 @@
 package com.oresomecraft.Achievements;
 
 import com.oresomecraft.Achievements.event.AchievementFulfilEvent;
+
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
@@ -10,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class Commands {
             min = 0,
             max = 1)
     @CommandPermissions({"oresomeachievements.list"})
-    public void goals(CommandContext args, CommandSender sender) {
+    public void goals(CommandContext args, CommandSender sender) throws SQLException {
         int page = 1;
         if (args.argsLength() == 1) {
             try {

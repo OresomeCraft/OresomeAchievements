@@ -1,8 +1,8 @@
 package com.oresomecraft.Achievements;
 
 import com.oresomecraft.Achievements.achievements.*;
+import com.oresomecraft.Achievements.db.MySQL;
 import com.oresomecraft.Achievements.event.ReadyAchievementsEvent;
-import com.oresomecraft.Achievements.persistence.DatabaseManager;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
 import org.bukkit.Bukkit;
@@ -43,6 +43,7 @@ public class OresomeAchievements extends JavaPlugin {
     public String storagePassword = null;
     public String storageDatabase = null;
     public String storagePrefix = null;
+    public MySQL mysql;
 
     public void onEnable() {
         //Config stuff
@@ -58,10 +59,14 @@ public class OresomeAchievements extends JavaPlugin {
         storagePrefix = "achievements";
 
         //SQL stuff
-        if(!DatabaseManager.load()){
-            logger.severe("Encountered an error while attempting to connect to the database.  Disabling...");
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
+        mysql = new MySQL(logger,
+                "[AchievementsDB] ",
+                storageHostname,
+                storagePort,
+                storageDatabase,
+                storageUsername,
+                storagePassword);
+        mysql.getConnection();
 
         //Register commands
         registerCommands();
@@ -114,7 +119,6 @@ public class OresomeAchievements extends JavaPlugin {
 
     public void onDisable() {
         //SQL Stuff
-        DatabaseManager.getDatabase().disconnect();
 
         //Unregister handlers
         HandlerList.unregisterAll(this);
