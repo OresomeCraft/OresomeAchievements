@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -66,7 +67,30 @@ public class OresomeAchievements extends JavaPlugin {
                 storageDatabase,
                 storageUsername,
                 storagePassword);
-        mysql.getConnection();
+        if(mysql.open()){
+            System.out.println("MySQL connected successfully!");
+
+            if(!this.mysql.isTable(storagePrefix + "_users")){
+                try {
+                    mysql.query("CREATE TABLE `" + storagePrefix + "_users` (" +
+                            "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
+                            "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                            "PRIMARY KEY (`id`))");
+                } catch (SQLException e) {
+                    e.printStackTrace();  //Meh, this isn't retard proof.
+                }
+            }
+
+            try {
+                mysql.query("INSERT INTO achievements_users (`name`) " +
+                        " VALUES ('R3creat3')");
+            } catch (SQLException e) {
+                e.printStackTrace();  //Meh, this isn't retard proof.
+            }
+        }else{
+            Bukkit.getPluginManager().disablePlugin(this);
+            //We couldn't connect, bye bye!
+        }
 
         //Register commands
         registerCommands();
