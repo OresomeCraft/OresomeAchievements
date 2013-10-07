@@ -15,13 +15,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.reflections.Reflections;
 
 import java.io.File;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -37,7 +36,8 @@ public class OresomeAchievements extends JavaPlugin {
     public HashMap<String, YamlConfiguration> configs = new HashMap<String, YamlConfiguration>();
     public ArrayList<String> ready = new ArrayList<String>();
 
-    public String storageType = null;;
+    public String storageType = null;
+    ;
     public int storagePort = 0;
     public String storageHostname = null;
     public String storageUsername = null;
@@ -48,7 +48,7 @@ public class OresomeAchievements extends JavaPlugin {
 
     public void onEnable() {
         //Config stuff
-        if(!(new File("plugin/OresomeAchievements/config.yml").isFile())){
+        if (!(new File("plugin/OresomeAchievements/config.yml").isFile())) {
             saveDefaultConfig();
         }
         storageType = getConfig().getString("database.type");
@@ -59,6 +59,7 @@ public class OresomeAchievements extends JavaPlugin {
         storageDatabase = "OresomeAchievements";
         storagePrefix = "achievements";
 
+
         //SQL stuff
         mysql = new MySQL(logger,
                 "[AchievementsDB] ",
@@ -67,28 +68,13 @@ public class OresomeAchievements extends JavaPlugin {
                 storageDatabase,
                 storageUsername,
                 storagePassword);
-        if(mysql.open()){
+        if (mysql.open()) {
             System.out.println("MySQL connected successfully!");
-
-            if(!this.mysql.isTable(storagePrefix + "_users")){
-                try {
-                    mysql.query("CREATE TABLE `" + storagePrefix + "_users` (" +
-                            "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
-                            "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                            "PRIMARY KEY (`id`))");
-                } catch (SQLException e) {
-                    e.printStackTrace();  //Meh, this isn't retard proof.
-                }
-            }
-
-            try {
-                mysql.query("INSERT INTO achievements_users (`name`) " +
-                        " VALUES ('R3creat3')");
-            } catch (SQLException e) {
-                e.printStackTrace();  //Meh, this isn't retard proof.
-            }
-        }else{
+            SQLAccess.queryCreateTables();
+        } else {
+            System.out.println("We couldn't connect to the SQL, throwing error and disabling!");
             Bukkit.getPluginManager().disablePlugin(this);
+            return;
             //We couldn't connect, bye bye!
         }
 
@@ -104,7 +90,7 @@ public class OresomeAchievements extends JavaPlugin {
         Bukkit.getPluginManager().callEvent(new ReadyAchievementsEvent());
     }
 
-    protected void loadAchs(){
+    protected void loadAchs() {
         //Make a protected method that loads the maps
         new FistsOfFury();
         new Addicted();
@@ -155,11 +141,11 @@ public class OresomeAchievements extends JavaPlugin {
         return plugin;
     }
 
-    public static HashMap<String, YamlConfiguration> getUserConfigs(){
+    public static HashMap<String, YamlConfiguration> getUserConfigs() {
         return OresomeAchievements.getInstance().configs;
     }
 
-    public static ArrayList<String> getReady(){
+    public static ArrayList<String> getReady() {
         return OresomeAchievements.getInstance().ready;
     }
 
