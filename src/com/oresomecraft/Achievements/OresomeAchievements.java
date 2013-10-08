@@ -17,8 +17,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -70,7 +68,7 @@ public class OresomeAchievements extends JavaPlugin {
                 storagePassword);
         if (mysql.open()) {
             System.out.println("MySQL connected successfully!");
-            SQLAccess.queryCreateTables();
+            SQLAccess.queryInsertComplete("Test", "Fists of Fury");
         } else {
             System.out.println("We couldn't connect to the SQL, throwing error and disabling!");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -85,7 +83,7 @@ public class OresomeAchievements extends JavaPlugin {
         loadAchs();
 
         //Listener instances
-        new JoinListener(this);
+        new SQLListener(this);
         new AchievementListener(this);
         Bukkit.getPluginManager().callEvent(new ReadyAchievementsEvent());
     }

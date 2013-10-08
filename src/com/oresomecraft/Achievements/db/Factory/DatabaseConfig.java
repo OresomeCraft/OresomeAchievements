@@ -1,11 +1,12 @@
 package com.oresomecraft.Achievements.db.Factory;
+
+import com.oresomecraft.Achievements.db.DBMS;
+
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import com.oresomecraft.Achievements.db.DBMS;
 
 /**
  * Configuration class for Database objects.<br>

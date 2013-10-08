@@ -1,15 +1,15 @@
 package com.oresomecraft.Achievements.db.Builders.MySQL;
 
+import com.oresomecraft.Achievements.db.Builders.Builder;
+import com.oresomecraft.Achievements.db.Builders.BuilderException;
+import com.oresomecraft.Achievements.db.Database;
+import com.oresomecraft.Achievements.db.DatabaseException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-
-import com.oresomecraft.Achievements.db.Builders.Builder;
-import com.oresomecraft.Achievements.db.Builders.BuilderException;
-import com.oresomecraft.Achievements.db.Database;
-import com.oresomecraft.Achievements.db.DatabaseException;
 
 /**
  * SELECT query builder.<br>
@@ -90,7 +90,7 @@ public class Select implements Builder {
     }
 
 	/*public Select(Database db, String columns, String tables) throws DatabaseException {
-		//setDatabase(db);
+        //setDatabase(db);
 		setColumns(columns);
 		setTables(tables);
 	}*/

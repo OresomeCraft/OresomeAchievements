@@ -1,4 +1,5 @@
 package com.oresomecraft.Achievements.db.Factory;
+
 /**
  * Exception for invalid configurations.<br>
  * Date Created: 2012-03-11 15:07.

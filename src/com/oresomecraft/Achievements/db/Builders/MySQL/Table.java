@@ -1,9 +1,9 @@
 package com.oresomecraft.Achievements.db.Builders.MySQL;
 
-import java.sql.SQLException;
-
 import com.oresomecraft.Achievements.db.Builders.Builder;
 import com.oresomecraft.Achievements.db.Database;
+
+import java.sql.SQLException;
 
 /**
  * CREATE TABLE query builder.<br>

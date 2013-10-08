@@ -1,7 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
 import com.oresomecraft.Achievements.*;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
