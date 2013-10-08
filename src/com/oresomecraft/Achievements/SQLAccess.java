@@ -1,5 +1,7 @@
 package com.oresomecraft.Achievements;
 
+import org.bukkit.Bukkit;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -9,36 +11,41 @@ public class SQLAccess {
      * Create the SQL tables if they don't already exist.
      */
     public static void queryCreateTables() {
-        if (!OresomeAchievements.getInstance().mysql.isTable(OresomeAchievements.getInstance().storagePrefix + "_users")) {
-            try {
-                OresomeAchievements.getInstance().mysql.query("CREATE TABLE `" + OresomeAchievements.getInstance().storagePrefix + "_users` (" +
-                        "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
-                        "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                        "`kicked` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                        "`joins` INT UNSIGNED NULL," +
-                        "`breaks` INT UNSIGNED NULL," +
-                        "`places` INT UNSIGNED NULL," +
-                        "`fishes` INT UNSIGNED NULL," +
-                        "`crafts` INT UNSIGNED NULL," +
-                        "`visits` INT UNSIGNED NULL," +
-                        "PRIMARY KEY (`id`))");
-            } catch (SQLException e) {
-                e.printStackTrace();  //Meh, this isn't retard proof.
-            }
-        }
+        Bukkit.getScheduler().runTaskAsynchronously(OresomeAchievements.getInstance(), new Runnable() {
+            if(!OresomeAchievements.getInstance().mysql.isTable(OresomeAchievements.getInstance().storagePrefix+"_users"))
 
-
-        if (!OresomeAchievements.getInstance().mysql.isTable(OresomeAchievements.getInstance().storagePrefix + "_complete")) {
-            try {
-                OresomeAchievements.getInstance().mysql.query("CREATE TABLE `" + OresomeAchievements.getInstance().storagePrefix + "_complete` (" +
-                        "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
-                        "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                        "`achievement` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                        "PRIMARY KEY (`id`))");
-            } catch (SQLException e) {
-                e.printStackTrace();  //Meh, this isn't retard proof.
+            {
+                try {
+                    OresomeAchievements.getInstance().mysql.query("CREATE TABLE `" + OresomeAchievements.getInstance().storagePrefix + "_users` (" +
+                            "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
+                            "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                            "`kicked` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                            "`joins` INT UNSIGNED NULL," +
+                            "`breaks` INT UNSIGNED NULL," +
+                            "`places` INT UNSIGNED NULL," +
+                            "`fishes` INT UNSIGNED NULL," +
+                            "`crafts` INT UNSIGNED NULL," +
+                            "`visits` INT UNSIGNED NULL," +
+                            "PRIMARY KEY (`id`))");
+                } catch (SQLException e) {
+                    e.printStackTrace();  //Meh, this isn't retard proof.
+                }
             }
-        }
+
+            if(!OresomeAchievements.getInstance().mysql.isTable(OresomeAchievements.getInstance().storagePrefix+"_complete"))
+
+            {
+                try {
+                    OresomeAchievements.getInstance().mysql.query("CREATE TABLE `" + OresomeAchievements.getInstance().storagePrefix + "_complete` (" +
+                            "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
+                            "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                            "`achievement` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                            "PRIMARY KEY (`id`))");
+                } catch (SQLException e) {
+                    e.printStackTrace();  //Meh, this isn't retard proof.
+                }
+            }
+        });
     }
 
     /**
@@ -69,6 +76,7 @@ public class SQLAccess {
     /**
      * Check if they havent achieved said achievement already, then add the achievement.
      */
+
     public static void queryInsertComplete(String name, String achievement) {
         ResultSet rs = null;
         try {
@@ -79,7 +87,7 @@ public class SQLAccess {
         try {
             boolean noadd = false;
             while (rs.next()) {
-                if (rs.getString("name").equals(name) && rs.getString("achievement").equals(achievement)){
+                if (rs.getString("name").equals(name) && rs.getString("achievement").equals(achievement)) {
                     noadd = true;
                     break;
                 }
