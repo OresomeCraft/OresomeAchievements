@@ -11,41 +11,39 @@ public class SQLAccess {
      * Create the SQL tables if they don't already exist.
      */
     public static void queryCreateTables() {
-        Bukkit.getScheduler().runTaskAsynchronously(OresomeAchievements.getInstance(), new Runnable() {
-            if(!OresomeAchievements.getInstance().mysql.isTable(OresomeAchievements.getInstance().storagePrefix+"_users"))
+        if (!OresomeAchievements.getInstance().mysql.isTable(OresomeAchievements.getInstance().storagePrefix + "_users"))
 
-            {
-                try {
-                    OresomeAchievements.getInstance().mysql.query("CREATE TABLE `" + OresomeAchievements.getInstance().storagePrefix + "_users` (" +
-                            "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
-                            "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                            "`kicked` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                            "`joins` INT UNSIGNED NULL," +
-                            "`breaks` INT UNSIGNED NULL," +
-                            "`places` INT UNSIGNED NULL," +
-                            "`fishes` INT UNSIGNED NULL," +
-                            "`crafts` INT UNSIGNED NULL," +
-                            "`visits` INT UNSIGNED NULL," +
-                            "PRIMARY KEY (`id`))");
-                } catch (SQLException e) {
-                    e.printStackTrace();  //Meh, this isn't retard proof.
-                }
+        {
+            try {
+                OresomeAchievements.getInstance().mysql.query("CREATE TABLE `" + OresomeAchievements.getInstance().storagePrefix + "_users` (" +
+                        "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
+                        "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                        "`kicked` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                        "`joins` INT UNSIGNED NULL," +
+                        "`breaks` INT UNSIGNED NULL," +
+                        "`places` INT UNSIGNED NULL," +
+                        "`fishes` INT UNSIGNED NULL," +
+                        "`crafts` INT UNSIGNED NULL," +
+                        "`visits` INT UNSIGNED NULL," +
+                        "PRIMARY KEY (`id`))");
+            } catch (SQLException e) {
+                e.printStackTrace();  //Meh, this isn't retard proof.
             }
+        }
 
-            if(!OresomeAchievements.getInstance().mysql.isTable(OresomeAchievements.getInstance().storagePrefix+"_complete"))
+        if (!OresomeAchievements.getInstance().mysql.isTable(OresomeAchievements.getInstance().storagePrefix + "_complete"))
 
-            {
-                try {
-                    OresomeAchievements.getInstance().mysql.query("CREATE TABLE `" + OresomeAchievements.getInstance().storagePrefix + "_complete` (" +
-                            "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
-                            "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                            "`achievement` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
-                            "PRIMARY KEY (`id`))");
-                } catch (SQLException e) {
-                    e.printStackTrace();  //Meh, this isn't retard proof.
-                }
+        {
+            try {
+                OresomeAchievements.getInstance().mysql.query("CREATE TABLE `" + OresomeAchievements.getInstance().storagePrefix + "_complete` (" +
+                        "`id` INT(10) UNSIGNED NULL AUTO_INCREMENT," +
+                        "`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                        "`achievement` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci'," +
+                        "PRIMARY KEY (`id`))");
+            } catch (SQLException e) {
+                e.printStackTrace();  //Meh, this isn't retard proof.
             }
-        });
+        }
     }
 
     /**
@@ -208,6 +206,220 @@ public class SQLAccess {
             return breaks;
         }
         return breaks;
+    }
+
+    public static void queryIncrementCrafts(String name) {
+        ResultSet rs = null;
+        try {
+            rs = OresomeAchievements.getInstance().mysql.query("SELECT * FROM achievements_users");
+        } catch (SQLException e) {
+            e.printStackTrace();  //Meh, this isn't retard proof.
+        }
+        try {
+            boolean noinc = false;
+            int crafts = 0;
+            while (rs.next()) {
+                if (rs.getString("name").equals(name)) {
+                    noinc = true;
+                    crafts = rs.getInt("crafts") + 1;
+                    break;
+                }
+            }
+            if (crafts == 0) {
+                System.out.println("Could not retrieve the `crafts` integer from the SQL db!");
+                throw new SQLException();
+            }
+            if (noinc == true) {
+                rs = OresomeAchievements.getInstance().mysql.query("UPDATE achievements_users SET crafts=" + crafts + " WHERE name='" + name + "'");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred whilst trying to increment " + name + "'s crafts in users DB!");
+            e.printStackTrace();
+        }
+    }
+
+    public static int queryGetCrafts(String name) {
+        int crafts = 0;
+        ResultSet rs = null;
+        try {
+            rs = OresomeAchievements.getInstance().mysql.query("SELECT * FROM achievements_users");
+        } catch (SQLException e) {
+            e.printStackTrace();  //Meh, this isn't retard proof.
+            return crafts;
+        }
+        try {
+            while (rs.next()) {
+                if (rs.getString("name").equals(name)) {
+                    crafts = rs.getInt("crafts");
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred whilst trying to get " + name + "'s crafts in users DB!");
+            e.printStackTrace();
+            return crafts;
+        }
+        return crafts;
+    }
+
+    public static void queryIncrementVisits(String name) {
+        ResultSet rs = null;
+        try {
+            rs = OresomeAchievements.getInstance().mysql.query("SELECT * FROM achievements_users");
+        } catch (SQLException e) {
+            e.printStackTrace();  //Meh, this isn't retard proof.
+        }
+        try {
+            boolean noinc = false;
+            int visits = 0;
+            while (rs.next()) {
+                if (rs.getString("name").equals(name)) {
+                    noinc = true;
+                    visits = rs.getInt("visits") + 1;
+                    break;
+                }
+            }
+            if (visits == 0) {
+                System.out.println("Could not retrieve the `visits` integer from the SQL db!");
+                throw new SQLException();
+            }
+            if (noinc == true) {
+                rs = OresomeAchievements.getInstance().mysql.query("UPDATE achievements_users SET visits=" + visits + " WHERE name='" + name + "'");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred whilst trying to increment " + name + "'s visits in users DB!");
+            e.printStackTrace();
+        }
+    }
+
+    public static int queryGetVisits(String name) {
+        int visits = 0;
+        ResultSet rs = null;
+        try {
+            rs = OresomeAchievements.getInstance().mysql.query("SELECT * FROM achievements_users");
+        } catch (SQLException e) {
+            e.printStackTrace();  //Meh, this isn't retard proof.
+            return visits;
+        }
+        try {
+            while (rs.next()) {
+                if (rs.getString("name").equals(name)) {
+                    visits = rs.getInt("visits");
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred whilst trying to get " + name + "'s visits in users DB!");
+            e.printStackTrace();
+            return visits;
+        }
+        return visits;
+    }
+
+    public static void queryIncrementPlaces(String name) {
+        ResultSet rs = null;
+        try {
+            rs = OresomeAchievements.getInstance().mysql.query("SELECT * FROM achievements_users");
+        } catch (SQLException e) {
+            e.printStackTrace();  //Meh, this isn't retard proof.
+        }
+        try {
+            boolean noinc = false;
+            int places = 0;
+            while (rs.next()) {
+                if (rs.getString("name").equals(name)) {
+                    noinc = true;
+                    places = rs.getInt("places") + 1;
+                    break;
+                }
+            }
+            if (places == 0) {
+                System.out.println("Could not retrieve the `places` integer from the SQL db!");
+                throw new SQLException();
+            }
+            if (noinc == true) {
+                rs = OresomeAchievements.getInstance().mysql.query("UPDATE achievements_users SET places=" + places + " WHERE name='" + name + "'");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred whilst trying to increment " + name + "'s places in users DB!");
+            e.printStackTrace();
+        }
+    }
+
+    public static int queryGetPlaces(String name) {
+        int places = 0;
+        ResultSet rs = null;
+        try {
+            rs = OresomeAchievements.getInstance().mysql.query("SELECT * FROM achievements_users");
+        } catch (SQLException e) {
+            e.printStackTrace();  //Meh, this isn't retard proof.
+            return places;
+        }
+        try {
+            while (rs.next()) {
+                if (rs.getString("name").equals(name)) {
+                    places = rs.getInt("places");
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred whilst trying to get " + name + "'s block places in users DB!");
+            e.printStackTrace();
+            return places;
+        }
+        return places;
+    }
+
+    public static void querySetKickedReason(String name, String reason) {
+        ResultSet rs = null;
+        try {
+            rs = OresomeAchievements.getInstance().mysql.query("SELECT * FROM achievements_users");
+        } catch (SQLException e) {
+            e.printStackTrace();  //Meh, this isn't retard proof.
+        }
+        try {
+            boolean noinc = false;
+            while (rs.next()) {
+                if (rs.getString("name").equals(name)) {
+                    noinc = true;
+                    break;
+                }
+            }
+            if (noinc == false) {
+                System.out.println("Could not retrieve the `kicked` status from the SQL db!");
+                throw new SQLException();
+            }
+            if (noinc == true) {
+                rs = OresomeAchievements.getInstance().mysql.query("UPDATE achievements_users SET kicked=" + reason + " WHERE name='" + name + "'");
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred whilst trying to set " + name + "'s kicked reason in users DB!");
+            e.printStackTrace();
+        }
+    }
+
+    public static String queryGetKickedReason(String name) {
+        String reason = "SQL Error";
+        ResultSet rs = null;
+        try {
+            rs = OresomeAchievements.getInstance().mysql.query("SELECT * FROM achievements_users");
+        } catch (SQLException e) {
+            e.printStackTrace();  //Meh, this isn't retard proof.
+            return reason;
+        }
+        try {
+            while (rs.next()) {
+                if (rs.getString("name").equals(name)) {
+                    reason = rs.getString("kicked");
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred whilst trying to get " + name + "'s kicked reason in users DB!");
+            e.printStackTrace();
+            return reason;
+        }
+        return reason;
     }
 
     public static boolean queryAlreadyAchieved(String name, String achievementName) {

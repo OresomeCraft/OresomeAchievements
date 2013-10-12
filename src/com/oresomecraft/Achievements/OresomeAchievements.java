@@ -31,8 +31,6 @@ public class OresomeAchievements extends JavaPlugin {
     protected static OresomeAchievements plugin;
     public ArrayList<String> achs = new ArrayList<String>();
     public HashMap<String, String> criteria = new HashMap<String, String>();
-    public HashMap<String, YamlConfiguration> configs = new HashMap<String, YamlConfiguration>();
-    public ArrayList<String> ready = new ArrayList<String>();
 
     public String storageType = null;
     ;
@@ -68,7 +66,6 @@ public class OresomeAchievements extends JavaPlugin {
                 storagePassword);
         if (mysql.open()) {
             System.out.println("MySQL connected successfully!");
-            SQLAccess.queryInsertComplete("Test", "Fists of Fury");
         } else {
             System.out.println("We couldn't connect to the SQL, throwing error and disabling!");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -115,7 +112,6 @@ public class OresomeAchievements extends JavaPlugin {
         new FreeTransport();
         new Reckless();
         new GoneFishin();
-        new GettingAround();
         new Sturdy();
         new SniperPractice();
         new EpicDive();
@@ -137,14 +133,6 @@ public class OresomeAchievements extends JavaPlugin {
 
     public static OresomeAchievements getInstance() {
         return plugin;
-    }
-
-    public static HashMap<String, YamlConfiguration> getUserConfigs() {
-        return OresomeAchievements.getInstance().configs;
-    }
-
-    public static ArrayList<String> getReady() {
-        return OresomeAchievements.getInstance().ready;
     }
 
     public static void addMap(String name) {

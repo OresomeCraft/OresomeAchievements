@@ -26,7 +26,7 @@ public class Addicted extends OAchievement implements IOAchievement, Listener {
     }
 
     //Make your own code to set off the achievement.
-    @EventHandler (priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void checkJoin(PlayerJoinEvent event) {
         Player p = event.getPlayer();
         int increment = SQLAccess.queryGetJoins(event.getPlayer().getName());

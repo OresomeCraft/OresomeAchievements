@@ -28,26 +28,12 @@ public class Builder extends OAchievement implements IOAchievement, Listener {
     @EventHandler
     public void checkPlace(BlockPlaceEvent event) {
         //Players may not have a config, just add a fail-safe check.
-        if (ConfigAccess.userConfigExists(event.getPlayer().getName()) == false) return;
-        YamlConfiguration config = null;
-        for (Map.Entry<String, YamlConfiguration> entry : OresomeAchievements.getInstance().getUserConfigs().entrySet()) {
-            if (entry.getKey().equals(event.getPlayer().getName()))
-                config = entry.getValue();
-        }
-        if (config == null) return;
-        int increment = 0;
-        if (config.contains(event.getPlayer().getName() + ".increments.builder") == true) {
-            increment = config.getInt(event.getPlayer().getName() + ".increments.builder");
-            config.set(event.getPlayer().getName() + ".increments.builder", increment + 1);
-        } else {
-            config.set(event.getPlayer().getName() + ".increments.builder", 1);
-        }
+        int increment = SQLAccess.queryGetPlaces(event.getPlayer().getName());
         if (increment >= 1000) {
             callAchievementGet(name, type, criteria, event.getPlayer(), increment, reward);
         }
         if (increment == 500 || increment == 250 || increment == 750 || increment == 900) {
             callAchievementCheckpoint(name, type, criteria, event.getPlayer(), increment);
         }
-        ConfigAccess.saveUserConfig(config, event.getPlayer().getName());
     }
 }

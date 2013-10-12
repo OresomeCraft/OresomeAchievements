@@ -26,7 +26,7 @@ public class AchievementListener implements Listener {
     public void fulfilAchievement(AchievementFulfilEvent event) {
         try {
             //Have you already achieved this?
-            if(SQLAccess.queryAlreadyAchieved(event.getPlayer().getName(), event.getAchievementName())) return;
+            if (SQLAccess.queryAlreadyAchieved(event.getPlayer().getName(), event.getAchievementName())) return;
             awardAchievement(event.getPlayer(), event.getAchievementName(), event.getCriteria(), event.getIncrement(), event.getReward(), event.getType());
             SQLAccess.queryInsertComplete(event.getPlayer().getName(), event.getAchievementName());
         } catch (AchievementException e) {

@@ -21,12 +21,12 @@ public class Commands {
         plugin = pl;
     }
 
-    @Command (aliases = {"achievements", "goals", "milestones"},
+    @Command(aliases = {"achievements", "goals", "milestones"},
             desc = "View the achievements",
             usage = "<page>",
             min = 0,
             max = 1)
-    @CommandPermissions ({"oresomeachievements.list"})
+    @CommandPermissions({"oresomeachievements.list"})
     public void goals(CommandContext args, CommandSender sender) throws SQLException {
         int page = 1;
         if (args.argsLength() == 1) {
@@ -62,12 +62,12 @@ public class Commands {
         sender.sendMessage(ChatColor.GOLD + "To see next page, type '/achievements " + (page + 1) + "'");
     }
 
-    @Command (aliases = {"complete", "fulfilled", "completedachievements"},
+    @Command(aliases = {"complete", "fulfilled", "completedachievements"},
             desc = "View a players' complete achievements",
             usage = "<player> <page>",
             min = 0,
             max = 2)
-    @CommandPermissions ({"oresomeachievements.list"})
+    @CommandPermissions({"oresomeachievements.list"})
     public void complete(CommandContext args, CommandSender sender) {
         int page = 1;
         if (args.argsLength() == 0) {
@@ -122,11 +122,11 @@ public class Commands {
         sender.sendMessage(ChatColor.GOLD + "To see next page, type '/achievements " + player + " " + (page + 1) + "'");
     }
 
-    @Command (aliases = {"achievementinfo", "goalinfo", "milestoneinfo", "achinfo"},
+    @Command(aliases = {"achievementinfo", "goalinfo", "milestoneinfo", "achinfo"},
             desc = "View an achievement's info",
             usage = "<achievement>",
             min = 1)
-    @CommandPermissions ({"oresomeachievements.goalinfo"})
+    @CommandPermissions({"oresomeachievements.goalinfo"})
     public void goalInfo(CommandContext args, CommandSender sender) {
         String arg = args.getJoinedStrings(0);
         if (!(plugin.achs.contains(arg))) {
@@ -147,7 +147,7 @@ public class Commands {
         }
     }
 
-    @Command (aliases = {"oresomeachievements", "oac", "oresomegoals"},
+    @Command(aliases = {"oresomeachievements", "oac", "oresomegoals"},
             desc = "Various OresomeAchievement commands",
             usage = "<reset/info/reload>",
             min = 1)
@@ -175,11 +175,11 @@ public class Commands {
         }
     }
 
-    @Command (aliases = {"achforce", "goalforce"},
+    @Command(aliases = {"achforce", "goalforce"},
             desc = "Force an achievement to yourself",
             usage = "<achievement>",
             min = 1)
-    @CommandPermissions ({"oresomeachievements.force"})
+    @CommandPermissions({"oresomeachievements.force"})
     //This is used primarily for testing new achievements or restoring lost achievements. Don't be an idiot and abuse it.
     public void achForce(CommandContext args, CommandSender sender) {
         String arg = args.getJoinedStrings(0);

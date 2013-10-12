@@ -356,7 +356,7 @@ public class Select implements Builder {
     }
 
     public Select update(Boolean update) {
-		/*if (update == null) {
+        /*if (update == null) {
 			this.update = null;
 			return this;
 		}*/
