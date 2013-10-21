@@ -13,15 +13,15 @@ import java.util.Collection;
 
 public class Torture extends OAchievement implements IOAchievement, Listener {
 
-    public Torture() {
-        super.initiate(this, name, type, criteria, reward);
-    }
-
     //Objective details
     String name = "Torture";
     OAType type = OAType.OBJECTIVE;
     String criteria = "Die whilst on fire and poisoned!";
     int reward = 10;
+
+    public Torture() {
+        super.initiate(this, name, type, criteria, reward);
+    }
 
     public void readyAchievement() {
         //Don't need anything here yet;
@@ -36,7 +36,9 @@ public class Torture extends OAchievement implements IOAchievement, Listener {
             for (PotionEffect effect : effects) {
                 if (effect.getType().equals(PotionEffectType.POISON)) check = true;
             }
-            callAchievementGet(name, type, criteria, event.getEntity(), 0, reward);
+            if (check = true) {
+                callAchievementGet(name, type, criteria, event.getEntity(), 0, reward);
+            }
         }
     }
 }

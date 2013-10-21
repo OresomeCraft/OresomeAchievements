@@ -6,21 +6,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.meta.FireworkMeta;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 public class AchievementListener implements Listener {
 
@@ -33,23 +24,12 @@ public class AchievementListener implements Listener {
 
     @EventHandler
     public void fulfilAchievement(AchievementFulfilEvent event) {
-        try{
-        YamlConfiguration config = null;
-        for (Map.Entry<String, YamlConfiguration> entry : OresomeAchievements.getInstance().getUserConfigs().entrySet()) {
-            if (entry.getKey().equals(event.getPlayer().getName()))
-                config = entry.getValue();
-        }
-        if(config == null){
-            System.out.println("ERROR: Achievement " + event.getAchievementName() + " could not be done due to null config!" );
-            return;
-        }
-        List<String> completed = config.getStringList(event.getPlayer().getName()+".completed");
-        if(completed.contains(event.getAchievementName())) return;
-        awardAchievement(event.getPlayer(), event.getAchievementName(), event.getCriteria(), event.getIncrement(), event.getReward(), event.getType());
-        completed.add(event.getAchievementName());
-        config.set(event.getPlayer().getName()+".completed", completed);
-        ConfigAccess.saveUserConfig(config, event.getPlayer().getName());
-        }catch(AchievementException e){
+        try {
+            //Have you already achieved this?
+            if (SQLAccess.queryAlreadyAchieved(event.getPlayer().getName(), event.getAchievementName())) return;
+            awardAchievement(event.getPlayer(), event.getAchievementName(), event.getCriteria(), event.getIncrement(), event.getReward(), event.getType());
+            SQLAccess.queryInsertComplete(event.getPlayer().getName(), event.getAchievementName());
+        } catch (AchievementException e) {
             e.printStackTrace();
         }
     }
@@ -64,7 +44,7 @@ public class AchievementListener implements Listener {
         event.getPlayer().sendMessage(ChatColor.YELLOW + "###################################");
     }
 
-    private void awardAchievement(Player player, String name, String criteria, int increment, int reward, OAType type) throws AchievementException{
+    private void awardAchievement(Player player, String name, String criteria, int increment, int reward, OAType type) throws AchievementException {
         player.sendMessage(ChatColor.YELLOW + "########" + ChatColor.GOLD + "ORESOMEACHIEVEMENTS" + ChatColor.YELLOW + "########");
         player.sendMessage(ChatColor.YELLOW + "ACHIEVEMENT GET!");
         Firework firework = (Firework) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREWORK);

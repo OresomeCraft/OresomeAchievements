@@ -4,7 +4,6 @@ import com.oresomecraft.Achievements.event.AchievementCheckpointEvent;
 import com.oresomecraft.Achievements.event.AchievementFulfilEvent;
 import com.oresomecraft.Achievements.event.ReadyAchievementsEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

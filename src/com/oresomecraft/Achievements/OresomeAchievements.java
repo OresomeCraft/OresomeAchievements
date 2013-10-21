@@ -1,8 +1,8 @@
 package com.oresomecraft.Achievements;
 
 import com.oresomecraft.Achievements.achievements.*;
+import com.oresomecraft.Achievements.db.MySQL;
 import com.oresomecraft.Achievements.event.ReadyAchievementsEvent;
-import com.oresomecraft.Achievements.persistence.DatabaseManager;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
 import org.bukkit.Bukkit;
@@ -15,12 +15,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.reflections.Reflections;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -33,20 +31,20 @@ public class OresomeAchievements extends JavaPlugin {
     protected static OresomeAchievements plugin;
     public ArrayList<String> achs = new ArrayList<String>();
     public HashMap<String, String> criteria = new HashMap<String, String>();
-    public HashMap<String, YamlConfiguration> configs = new HashMap<String, YamlConfiguration>();
-    public ArrayList<String> ready = new ArrayList<String>();
 
-    public String storageType = null;;
+    public String storageType = null;
+    ;
     public int storagePort = 0;
     public String storageHostname = null;
     public String storageUsername = null;
     public String storagePassword = null;
     public String storageDatabase = null;
     public String storagePrefix = null;
+    public MySQL mysql;
 
     public void onEnable() {
         //Config stuff
-        if(!(new File("plugin/OresomeAchievements/config.yml").isFile())){
+        if (!(new File("plugin/OresomeAchievements/config.yml").isFile())) {
             saveDefaultConfig();
         }
         storageType = getConfig().getString("database.type");
@@ -57,10 +55,22 @@ public class OresomeAchievements extends JavaPlugin {
         storageDatabase = "OresomeAchievements";
         storagePrefix = "achievements";
 
+
         //SQL stuff
-        if(!DatabaseManager.load()){
-            logger.severe("Encountered an error while attempting to connect to the database.  Disabling...");
+        mysql = new MySQL(logger,
+                "[AchievementsDB] ",
+                storageHostname,
+                storagePort,
+                storageDatabase,
+                storageUsername,
+                storagePassword);
+        if (mysql.open()) {
+            System.out.println("MySQL connected successfully!");
+        } else {
+            System.out.println("We couldn't connect to the SQL, throwing error and disabling!");
             Bukkit.getPluginManager().disablePlugin(this);
+            return;
+            //We couldn't connect, bye bye!
         }
 
         //Register commands
@@ -70,12 +80,12 @@ public class OresomeAchievements extends JavaPlugin {
         loadAchs();
 
         //Listener instances
-        new JoinListener(this);
+        new SQLListener(this);
         new AchievementListener(this);
         Bukkit.getPluginManager().callEvent(new ReadyAchievementsEvent());
     }
 
-    protected void loadAchs(){
+    protected void loadAchs() {
         //Make a protected method that loads the maps
         new FistsOfFury();
         new Addicted();
@@ -102,7 +112,6 @@ public class OresomeAchievements extends JavaPlugin {
         new FreeTransport();
         new Reckless();
         new GoneFishin();
-        new GettingAround();
         new Sturdy();
         new SniperPractice();
         new EpicDive();
@@ -114,7 +123,6 @@ public class OresomeAchievements extends JavaPlugin {
 
     public void onDisable() {
         //SQL Stuff
-        DatabaseManager.getDatabase().disconnect();
 
         //Unregister handlers
         HandlerList.unregisterAll(this);
@@ -125,14 +133,6 @@ public class OresomeAchievements extends JavaPlugin {
 
     public static OresomeAchievements getInstance() {
         return plugin;
-    }
-
-    public static HashMap<String, YamlConfiguration> getUserConfigs(){
-        return OresomeAchievements.getInstance().configs;
-    }
-
-    public static ArrayList<String> getReady(){
-        return OresomeAchievements.getInstance().ready;
     }
 
     public static void addMap(String name) {

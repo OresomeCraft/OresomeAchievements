@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class Commands {
             min = 0,
             max = 1)
     @CommandPermissions({"oresomeachievements.list"})
-    public void goals(CommandContext args, CommandSender sender) {
+    public void goals(CommandContext args, CommandSender sender) throws SQLException {
         int page = 1;
         if (args.argsLength() == 1) {
             try {
@@ -44,12 +44,12 @@ public class Commands {
         boolean stopcheck = false;
         while (i < maxPage && stopcheck == false) {
             try {
-                String done = ChatColor.GREEN + "" +ChatColor.BOLD + " +";
+                String done = ChatColor.GREEN + "" + ChatColor.BOLD + " +";
                 String notdone = ChatColor.RED + "" + ChatColor.BOLD + " -";
-                List<String> list = ConfigAccess.loadUserConfig(sender.getName()).getStringList(sender.getName()+".completed");
-                if(list.contains(plugin.achs.get(i))){
-                sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i) + done);
-                }else{
+                List<String> list = ConfigAccess.loadUserConfig(sender.getName()).getStringList(sender.getName() + ".completed");
+                if (list.contains(plugin.achs.get(i))) {
+                    sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i) + done);
+                } else {
                     sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i) + notdone);
                 }
                 i++;
@@ -70,28 +70,28 @@ public class Commands {
     @CommandPermissions({"oresomeachievements.list"})
     public void complete(CommandContext args, CommandSender sender) {
         int page = 1;
-        if(args.argsLength() == 0){
+        if (args.argsLength() == 0) {
             Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " 1");
             return;
         }
         String player = args.getString(0);
         String playerActual = args.getString(0);
-        if(args.argsLength() == 1){
-            if(ConfigAccess.userConfigExists(player)){
+        if (args.argsLength() == 1) {
+            if (ConfigAccess.userConfigExists(player)) {
                 Bukkit.dispatchCommand(sender, "complete " + player + " " + page);
                 return;
             }
-            try{
-            page = Integer.parseInt(player);
-            Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " " + page);
-            }catch(NumberFormatException e){
+            try {
+                page = Integer.parseInt(player);
+                Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " " + page);
+            } catch (NumberFormatException e) {
                 Bukkit.dispatchCommand(sender, "complete " + sender.getName() + " " + page);
                 sender.sendMessage(ChatColor.RED + "That is not a number!");
                 return;
             }
             return;
         }
-        if(ConfigAccess.userConfigExists(playerActual) == false && args.argsLength() == 2){
+        if (ConfigAccess.userConfigExists(playerActual) == false && args.argsLength() == 2) {
             sender.sendMessage(ChatColor.RED + "That user doesn't exist!");
             return;
         }
@@ -103,7 +103,7 @@ public class Commands {
                 return;
             }
         }
-        List<String> achs = ConfigAccess.loadUserConfig(player).getStringList(player+".completed");
+        List<String> achs = ConfigAccess.loadUserConfig(player).getStringList(player + ".completed");
         int maxPage = page * 10;
         int i = maxPage - 10;
         sender.sendMessage(ChatColor.GOLD + player + "'s achievement list (Page " + page + ")");
