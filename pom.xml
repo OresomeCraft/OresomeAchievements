@@ -48,7 +48,6 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>org.reflections:reflections</include>
                                     <include>com.sk89q:sk89q-command-framework</include>
                                 </includes>
                             </artifactSet>
@@ -62,18 +61,13 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>LATEST</version>
+            <version>1.6.4-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.9-RC1</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
