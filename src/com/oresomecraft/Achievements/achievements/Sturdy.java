@@ -3,6 +3,7 @@ package com.oresomecraft.Achievements.achievements;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,10 +28,11 @@ public class Sturdy extends OAchievement implements IOAchievement, Listener {
     //Make your own code to set off the achievement.
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
-        if (event.getEntity().getKiller() instanceof Player)
+        if (event.getEntity().getKiller() != null) {
             if (event.getEntity().getKiller().getHealth() == 1) {
                 Player p = event.getEntity().getKiller();
                 callAchievementGet(name, type, criteria, event.getEntity().getKiller(), 0, reward);
             }
+        }
     }
 }

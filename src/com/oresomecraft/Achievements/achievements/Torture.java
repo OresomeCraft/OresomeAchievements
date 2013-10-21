@@ -3,6 +3,7 @@ package com.oresomecraft.Achievements.achievements;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -36,7 +37,7 @@ public class Torture extends OAchievement implements IOAchievement, Listener {
             for (PotionEffect effect : effects) {
                 if (effect.getType().equals(PotionEffectType.POISON)) check = true;
             }
-            if (check = true) {
+            if (check) {
                 callAchievementGet(name, type, criteria, event.getEntity(), 0, reward);
             }
         }

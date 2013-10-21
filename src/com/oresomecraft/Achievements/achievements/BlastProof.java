@@ -3,6 +3,7 @@ package com.oresomecraft.Achievements.achievements;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,7 +33,7 @@ public class BlastProof extends OAchievement implements IOAchievement, Listener 
             try {
                 EntityDamageEvent.DamageCause cause = p.getLastDamageCause().getCause();
                 if (cause == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
-                    if (p.getLastDamage() > 14 && p.isDead() == false) {
+                    if (p.getLastDamage() > 14 && !p.isDead()) {
                         callAchievementGet(name, type, criteria, p, 0, reward);
                     }
                 }

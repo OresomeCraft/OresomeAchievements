@@ -4,7 +4,6 @@ import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
 import com.oresomecraft.OresomeBattles.api.BattlePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -28,7 +27,7 @@ public class BigStreak extends OAchievement implements IOAchievement, Listener {
     //Make your own code to set off the achievement.
     @EventHandler
     public void checkDeath(PlayerDeathEvent event) {
-        if (event.getEntity().getKiller() instanceof Player) {
+        if (event.getEntity().getKiller() != null) {
             try {
                 BattlePlayer p = BattlePlayer.getBattlePlayer(event.getEntity().getKiller());
                 if (p.getKillStreak() >= 50) {

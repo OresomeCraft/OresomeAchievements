@@ -52,7 +52,7 @@ public class SQLListener implements Listener {
     public void kick(PlayerKickEvent event) {
         if (event.getReason().contains("Flying is not enabled on this server")) {
             SQLAccess.querySetKickedReason(event.getPlayer().getName(), "truefly");
-        }else{
+        } else {
             SQLAccess.querySetKickedReason(event.getPlayer().getName(), "true");
         }
         //Create a new config for the player, if the player doesn't have one.

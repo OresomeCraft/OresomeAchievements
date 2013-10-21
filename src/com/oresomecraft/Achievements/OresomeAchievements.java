@@ -3,15 +3,16 @@ package com.oresomecraft.Achievements;
 import com.oresomecraft.Achievements.achievements.*;
 import com.oresomecraft.Achievements.db.MySQL;
 import com.oresomecraft.Achievements.event.ReadyAchievementsEvent;
+
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,7 +34,6 @@ public class OresomeAchievements extends JavaPlugin {
     public HashMap<String, String> criteria = new HashMap<String, String>();
 
     public String storageType = null;
-    ;
     public int storagePort = 0;
     public String storageHostname = null;
     public String storageUsername = null;

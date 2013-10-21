@@ -2,6 +2,7 @@ package com.oresomecraft.Achievements;
 
 import com.oresomecraft.Achievements.event.AchievementCheckpointEvent;
 import com.oresomecraft.Achievements.event.AchievementFulfilEvent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;

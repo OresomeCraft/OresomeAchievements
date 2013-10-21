@@ -1,9 +1,11 @@
 package com.oresomecraft.Achievements;
 
 import com.oresomecraft.Achievements.event.AchievementFulfilEvent;
+
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -41,8 +43,8 @@ public class Commands {
         int i = maxPage - 10;
         sender.sendMessage(ChatColor.GOLD + "Achievements List (Page " + page + ")");
         //10 per page, so if it's page 2 it will check the array-list from 10-20.
-        boolean stopcheck = false;
-        while (i < maxPage && stopcheck == false) {
+        boolean stopCheck = false;
+        while (i < maxPage && !stopCheck) {
             try {
                 String done = ChatColor.GREEN + "" + ChatColor.BOLD + " +";
                 String notdone = ChatColor.RED + "" + ChatColor.BOLD + " -";
@@ -56,7 +58,7 @@ public class Commands {
             } catch (IndexOutOfBoundsException e) {
                 sender.sendMessage(ChatColor.RED + "No further achievements found.");
                 i++;
-                stopcheck = true;
+                stopCheck = true;
             }
         }
         sender.sendMessage(ChatColor.GOLD + "To see next page, type '/achievements " + (page + 1) + "'");
@@ -108,15 +110,15 @@ public class Commands {
         int i = maxPage - 10;
         sender.sendMessage(ChatColor.GOLD + player + "'s achievement list (Page " + page + ")");
         //10 per page, so if it's page 2 it will check the array-list from 10-20.
-        boolean stopcheck = false;
-        while (i < maxPage && stopcheck == false) {
+        boolean stopCheck = false;
+        while (i < maxPage && !stopCheck) {
             try {
                 sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + achs.get(i));
                 i++;
             } catch (IndexOutOfBoundsException e) {
                 sender.sendMessage(ChatColor.RED + "No further achievements found.");
                 i++;
-                stopcheck = true;
+                stopCheck = true;
             }
         }
         sender.sendMessage(ChatColor.GOLD + "To see next page, type '/achievements " + player + " " + (page + 1) + "'");
@@ -164,7 +166,7 @@ public class Commands {
                 File file = new File("plugins/OresomeAchievements/users", args.getString(1) + ".yml");
                 file.delete();
                 sender.sendMessage(ChatColor.AQUA + "User's configuration was deleted!");
-                if (Bukkit.getPlayer(args.getString(1)) instanceof Player) {
+                if (Bukkit.getPlayer(args.getString(1)) != null) {
                     Bukkit.getPlayer(args.getString(1)).kickPlayer(ChatColor.RED + "Your configuration was reset, relogin!");
                 }
             } else {

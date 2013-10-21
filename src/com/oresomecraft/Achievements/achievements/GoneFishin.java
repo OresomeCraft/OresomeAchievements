@@ -37,7 +37,7 @@ public class GoneFishin extends OAchievement implements IOAchievement, Listener 
         }
         if (config == null) return;
         int increment = 0;
-        if (config.contains(event.getPlayer().getName() + ".increments.fishing") == true) {
+        if (config.contains(event.getPlayer().getName() + ".increments.fishing")) {
             increment = config.getInt(event.getPlayer().getName() + ".increments.fishing");
             config.set(event.getPlayer().getName() + ".increments.fishing", increment + 1);
         } else {
