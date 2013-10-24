@@ -2,7 +2,6 @@ package com.oresomecraft.Achievements;
 
 import com.oresomecraft.Achievements.event.AchievementCheckpointEvent;
 import com.oresomecraft.Achievements.event.AchievementFulfilEvent;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -12,7 +11,11 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
+
+import java.sql.SQLException;
 
 public class AchievementListener implements Listener {
 
@@ -24,13 +27,35 @@ public class AchievementListener implements Listener {
     }
 
     @EventHandler
+     public void cacheAchievementPlayer(final PlayerJoinEvent event) {
+        AchievementPlayer.craftAchievementPlayer(event.getPlayer());
+        final AchievementPlayer ap = AchievementPlayer.getAchievementPlayer(event.getPlayer());
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            public void run() {
+                try {
+                    ap.setCompleted(SQLAccess.getCompleted(event.getPlayer().getName()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @EventHandler
+    public void cacheRemoveAchievementPlayer(final PlayerQuitEvent event) {
+        plugin.getAchievementPlayers().remove(event.getPlayer().getName());
+    }
+
+    @EventHandler
     public void fulfilAchievement(AchievementFulfilEvent event) {
         try {
             //Have you already achieved this?
-            if (SQLAccess.queryAlreadyAchieved(event.getPlayer().getName(), event.getAchievementName())) return;
+            AchievementPlayer ap = AchievementPlayer.getAchievementPlayer(event.getPlayer());
+            if (ap.getCompletedAchievements().contains(event.getAchievementName())) return;
+            ap.addNewAchievement(event.getAchievementName());
             awardAchievement(event.getPlayer(), event.getAchievementName(), event.getCriteria(), event.getIncrement(), event.getReward(), event.getType());
-            SQLAccess.queryInsertComplete(event.getPlayer().getName(), event.getAchievementName());
-        } catch (AchievementException e) {
+            SQLAccess.logComplete(event.getPlayer().getName(), event.getAchievementName());
+       } catch (AchievementException e) {
             e.printStackTrace();
         }
     }

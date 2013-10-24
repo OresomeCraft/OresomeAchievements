@@ -1,13 +1,9 @@
 package com.oresomecraft.Achievements.event;
 
 import com.oresomecraft.Achievements.OAType;
-import com.oresomecraft.Achievements.OresomeAchievements;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
-
-import java.util.Map;
 
 public final class AchievementFulfilEvent extends PlayerEvent {
     private static final HandlerList handlers = new HandlerList();
@@ -34,15 +30,6 @@ public final class AchievementFulfilEvent extends PlayerEvent {
         this.criteria = criteria;
         this.award = award;
         this.type = type;
-    }
-
-    public YamlConfiguration getConfig() {
-        YamlConfiguration c = null;
-        for (Map.Entry<String, YamlConfiguration> entry : OresomeAchievements.getInstance().getUserConfigs().entrySet()) {
-            if (entry.getKey().equals(player.getName()))
-                c = entry.getValue();
-        }
-        return c;
     }
 
     /**

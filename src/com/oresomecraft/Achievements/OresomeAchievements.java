@@ -3,10 +3,8 @@ package com.oresomecraft.Achievements;
 import com.oresomecraft.Achievements.achievements.*;
 import com.oresomecraft.Achievements.db.MySQL;
 import com.oresomecraft.Achievements.event.ReadyAchievementsEvent;
-
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -18,6 +16,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -28,19 +27,32 @@ import java.util.logging.Logger;
  * @author OresomeCraft, R3creat3
  */
 public class OresomeAchievements extends JavaPlugin {
+
+    //Achievement stuff and plugin stuff.
     public static final Logger logger = Logger.getLogger("Minecraft");
     protected static OresomeAchievements plugin;
     public ArrayList<String> achs = new ArrayList<String>();
     public HashMap<String, String> criteria = new HashMap<String, String>();
 
+    //SQL stuff, notouch.
     public String storageType = null;
     public int storagePort = 0;
     public String storageHostname = null;
     public String storageUsername = null;
     public String storagePassword = null;
     public String storageDatabase = null;
-    public String storagePrefix = null;
-    public MySQL mysql;
+    public static MySQL mysql;
+
+    //Cache and more SQL stuff
+    public static ArrayList<String> achInput = new ArrayList<String>();
+    public boolean offlineMode = false;
+
+    //Player objects
+    private HashMap<String, AchievementPlayer> achPlayers = new HashMap<String, AchievementPlayer>();
+
+    public HashMap<String, AchievementPlayer> getAchievementPlayers() {
+        return achPlayers;
+    }
 
     public void onEnable() {
         //Config stuff
@@ -53,7 +65,6 @@ public class OresomeAchievements extends JavaPlugin {
         storageUsername = getConfig().getString("database.username");
         storagePassword = getConfig().getString("database.password");
         storageDatabase = "OresomeAchievements";
-        storagePrefix = "achievements";
 
 
         //SQL stuff
@@ -66,12 +77,13 @@ public class OresomeAchievements extends JavaPlugin {
                 storagePassword);
         if (mysql.open()) {
             System.out.println("MySQL connected successfully!");
+            SQLAccess.createTables();
+            mysql.close();
         } else {
-            System.out.println("We couldn't connect to the SQL, throwing error and disabling!");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-            //We couldn't connect, bye bye!
+            System.out.println("We couldn't connect to the SQL, offline mode initiate!");
+            offlineMode = true;
         }
+        cacheTimer();
 
         //Register commands
         registerCommands();
@@ -80,22 +92,18 @@ public class OresomeAchievements extends JavaPlugin {
         loadAchs();
 
         //Listener instances
-        new SQLListener(this);
         new AchievementListener(this);
         Bukkit.getPluginManager().callEvent(new ReadyAchievementsEvent());
     }
 
     protected void loadAchs() {
-        //Make a protected method that loads the maps
+        //Make a protected
+        // method that loads the maps
         new FistsOfFury();
-        new Addicted();
         new BigStreak();
         new Experienced();
         new AnvilFalling();
         new Nimble();
-        new Builder();
-        new Crafter();
-        new Demolition();
         new OverPowered();
         new MillionVolts();
         new BlastProof();
@@ -104,12 +112,9 @@ public class OresomeAchievements extends JavaPlugin {
         new Manipulator();
         new AdminYet();
         new Cursed();
-        new Naughty();
         new GlitchingI();
         new GlitchingII();
-        new GlitchingIII();
         new Ranked();
-        new FreeTransport();
         new Reckless();
         new GoneFishin();
         new Sturdy();
@@ -141,6 +146,25 @@ public class OresomeAchievements extends JavaPlugin {
 
     public static void addCriteria(String name, String criteria) {
         plugin.criteria.put(name, criteria);
+    }
+
+    /* this will push all cached stuff every 10 seconds */
+    public synchronized void cacheTimer() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            public synchronized void run() {
+                mysql.open();
+                while(achInput.size() > 0){
+                    String s = achInput.get(0);
+                    try {
+                        mysql.query(s);
+                    } catch (SQLException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    achInput.remove(0);
+                }
+                mysql.close();
+            }
+        }, 10 * 20L, 10 * 20L);
     }
 
     /**

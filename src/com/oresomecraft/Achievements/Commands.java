@@ -46,14 +46,7 @@ public class Commands {
         boolean stopCheck = false;
         while (i < maxPage && !stopCheck) {
             try {
-                String done = ChatColor.GREEN + "" + ChatColor.BOLD + " +";
-                String notdone = ChatColor.RED + "" + ChatColor.BOLD + " -";
-                List<String> list = ConfigAccess.loadUserConfig(sender.getName()).getStringList(sender.getName() + ".completed");
-                if (list.contains(plugin.achs.get(i))) {
-                    sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i) + done);
-                } else {
-                    sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i) + notdone);
-                }
+                sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i));
                 i++;
             } catch (IndexOutOfBoundsException e) {
                 sender.sendMessage(ChatColor.RED + "No further achievements found.");
@@ -79,7 +72,7 @@ public class Commands {
         String player = args.getString(0);
         String playerActual = args.getString(0);
         if (args.argsLength() == 1) {
-            if (ConfigAccess.userConfigExists(player)) {
+            if (AchievementPlayer.getAchievementPlayer(playerActual) != null) {
                 Bukkit.dispatchCommand(sender, "complete " + player + " " + page);
                 return;
             }
@@ -93,8 +86,8 @@ public class Commands {
             }
             return;
         }
-        if (ConfigAccess.userConfigExists(playerActual) == false && args.argsLength() == 2) {
-            sender.sendMessage(ChatColor.RED + "That user doesn't exist!");
+        if (AchievementPlayer.getAchievementPlayer(playerActual) != null) {
+            sender.sendMessage(ChatColor.RED + "That user doesn't exist or isn't online!");
             return;
         }
         if (args.argsLength() == 2) {
@@ -105,7 +98,8 @@ public class Commands {
                 return;
             }
         }
-        List<String> achs = ConfigAccess.loadUserConfig(player).getStringList(player + ".completed");
+        AchievementPlayer ap = AchievementPlayer.getAchievementPlayer(playerActual);
+        List<String> achs = ap.getCompletedAchievements();
         int maxPage = page * 10;
         int i = maxPage - 10;
         sender.sendMessage(ChatColor.GOLD + player + "'s achievement list (Page " + page + ")");
@@ -137,7 +131,8 @@ public class Commands {
         }
         for (Map.Entry<String, String> entry : plugin.criteria.entrySet()) {
             if (entry.getKey().equals(arg)) {
-                List<String> list = ConfigAccess.loadUserConfig(sender.getName()).getStringList(sender.getName() + ".completed");
+                AchievementPlayer ap = AchievementPlayer.getAchievementPlayer(sender.getName());
+                List<String> list = ap.getCompletedAchievements();
                 String yesorno = ChatColor.RED + "Incomplete";
                 if (list.contains(entry.getKey())) {
                     yesorno = ChatColor.GREEN + "Complete";

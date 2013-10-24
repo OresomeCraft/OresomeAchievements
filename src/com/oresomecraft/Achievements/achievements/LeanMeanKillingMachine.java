@@ -8,9 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class BigStreak extends OAchievement implements IOAchievement, Listener {
+public class LeanMeanKillingMachine extends OAchievement implements IOAchievement, Listener {
 
-    public BigStreak() {
+    public LeanMeanKillingMachine() {
         super.initiate(this, name, type, criteria, reward);
     }
 
