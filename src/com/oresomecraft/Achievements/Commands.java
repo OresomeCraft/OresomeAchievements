@@ -129,4 +129,14 @@ public class Commands {
             sender.sendMessage(ChatColor.RED + "That achievement doesn't exist!");
         }
     }
+
+    @Command(aliases = {"oacquery"},
+            desc = "Make a query in the OresomeAchievements SQL DB",
+            usage = "<query>",
+            flags = "e",
+            min = 1)
+    @CommandPermissions({"oresomeachievements.goalinfo"})
+    public void query(CommandContext args, CommandSender sender) {
+        //Will do later
+    }
 }

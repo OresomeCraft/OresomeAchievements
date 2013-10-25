@@ -363,7 +363,7 @@ public class Select implements Builder {
         this.update = update;
         return this;
     }
-	
+
 	/*private void setColumns(String columns) throws DatabaseException {
 		if (columns == null || columns.isEmpty())
 			throw new DatabaseException("String columns cannot be null or empty in SELECT query.");

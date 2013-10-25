@@ -2,8 +2,8 @@ package com.oresomecraft.Achievements;
 
 public class Access {
 
-    public static void addMap(String name) {
-        OresomeAchievements.addMap(name);
+    public static void addAchievement(String name) {
+        OresomeAchievements.addAchievement(name);
     }
 
     public static void addCriteria(String name, String criteria) {

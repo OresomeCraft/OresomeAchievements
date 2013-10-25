@@ -27,7 +27,7 @@ public class AchievementListener implements Listener {
     }
 
     @EventHandler
-     public void cacheAchievementPlayer(final PlayerJoinEvent event) {
+    public void cacheAchievementPlayer(final PlayerJoinEvent event) {
         AchievementPlayer.craftAchievementPlayer(event.getPlayer());
         final AchievementPlayer ap = AchievementPlayer.getAchievementPlayer(event.getPlayer());
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
@@ -55,7 +55,7 @@ public class AchievementListener implements Listener {
             ap.addNewAchievement(event.getAchievementName());
             awardAchievement(event.getPlayer(), event.getAchievementName(), event.getCriteria(), event.getIncrement(), event.getReward(), event.getType());
             SQLAccess.logComplete(event.getPlayer().getName(), event.getAchievementName());
-       } catch (AchievementException e) {
+        } catch (AchievementException e) {
             e.printStackTrace();
         }
     }

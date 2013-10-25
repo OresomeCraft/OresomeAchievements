@@ -78,12 +78,15 @@ public class OresomeAchievements extends JavaPlugin {
         if (mysql.open()) {
             System.out.println("MySQL connected successfully!");
             SQLAccess.createTables();
+            offlineMode = true;
             mysql.close();
         } else {
             System.out.println("We couldn't connect to the SQL, offline mode initiate!");
             offlineMode = true;
         }
-        cacheTimer();
+        if (offlineMode) {
+            cacheTimer();
+        }
 
         //Register commands
         registerCommands();
@@ -100,8 +103,8 @@ public class OresomeAchievements extends JavaPlugin {
         //Make a protected
         // method that loads the maps
         new FistsOfFury();
-        new BigStreak();
         new Experienced();
+        new WakeupCall();
         new AnvilFalling();
         new Nimble();
         new OverPowered();
@@ -112,14 +115,20 @@ public class OresomeAchievements extends JavaPlugin {
         new Manipulator();
         new AdminYet();
         new Cursed();
-        new GlitchingI();
         new GlitchingII();
         new Ranked();
+        new Overkill();
         new Reckless();
         new GoneFishin();
         new Sturdy();
         new SniperPractice();
         new EpicDive();
+
+        if (Bukkit.getPluginManager().getPlugin("OresomeBattles") != null) {
+            new LeanMeanKillingMachine();
+            new BigStreak();
+            new GlitchingI();
+        }
     }
 
     public OresomeAchievements() {
@@ -140,7 +149,7 @@ public class OresomeAchievements extends JavaPlugin {
         return plugin;
     }
 
-    public static void addMap(String name) {
+    public static void addAchievement(String name) {
         plugin.achs.add(name);
     }
 
@@ -150,15 +159,16 @@ public class OresomeAchievements extends JavaPlugin {
 
     /* this will push all cached stuff every 10 seconds */
     public synchronized void cacheTimer() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public synchronized void run() {
+                if(achInput.size() <= 0) return;
                 mysql.open();
-                while(achInput.size() > 0){
+                while (achInput.size() > 0) {
                     String s = achInput.get(0);
                     try {
                         mysql.query(s);
                     } catch (SQLException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        e.printStackTrace();
                     }
                     achInput.remove(0);
                 }

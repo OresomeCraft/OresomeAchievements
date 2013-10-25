@@ -19,14 +19,14 @@ public class AchievementPlayer extends CraftPlayer {
     /**
      * Add another achievement to the local cache
      */
-    public static void addNewAchievement(String achievement){
+    public static void addNewAchievement(String achievement) {
         completed.add(achievement);
     }
 
     /**
      * Get the player's list of completed achievements
      */
-    public static ArrayList<String> getCompletedAchievements(){
+    public static ArrayList<String> getCompletedAchievements() {
         return completed;
     }
 
@@ -42,7 +42,7 @@ public class AchievementPlayer extends CraftPlayer {
      *
      * @param cache A list of completed achievements
      */
-    public static void setCompleted(ArrayList<String> cache){
+    public static void setCompleted(ArrayList<String> cache) {
         completed.clear();
         completed.addAll(cache);
     }

@@ -28,14 +28,14 @@ public abstract class OAchievement implements Listener {
      *
      * @param event An Event called by the plugin
      */
-    @EventHandler // Add map
+    @EventHandler // Add achievement
     public void readyAch(ReadyAchievementsEvent event) {
-        addMap(name);
+        addAchievement(name);
         addCriteria(name, criteria);
     }
 
     /**
-     * Sets details for the map after initiation
+     * Sets details for the achievement after initiation
      *
      * @param config An OAchievement
      * @param name   Name of map
@@ -56,8 +56,8 @@ public abstract class OAchievement implements Listener {
         Bukkit.getPluginManager().callEvent(new AchievementCheckpointEvent(player, name, increment, criteria, type));
     }
 
-    private static void addMap(String name) {
-        Access.addMap(name);
+    private static void addAchievement(String name) {
+        Access.addAchievement(name);
     }
 
     private static void addCriteria(String name, String criteria) {

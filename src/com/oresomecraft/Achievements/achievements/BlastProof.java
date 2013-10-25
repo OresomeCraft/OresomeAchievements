@@ -3,7 +3,7 @@ package com.oresomecraft.Achievements.achievements;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
-
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,6 +30,7 @@ public class BlastProof extends OAchievement implements IOAchievement, Listener 
     public void checkEntity(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
+            if (p.getGameMode() == GameMode.CREATIVE) return;
             try {
                 EntityDamageEvent.DamageCause cause = p.getLastDamageCause().getCause();
                 if (cause == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
