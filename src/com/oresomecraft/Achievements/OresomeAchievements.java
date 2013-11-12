@@ -3,8 +3,10 @@ package com.oresomecraft.Achievements;
 import com.oresomecraft.Achievements.achievements.*;
 import com.oresomecraft.Achievements.db.MySQL;
 import com.oresomecraft.Achievements.event.ReadyAchievementsEvent;
+
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -31,7 +33,7 @@ public class OresomeAchievements extends JavaPlugin {
     //Achievement stuff and plugin stuff.
     public static final Logger logger = Logger.getLogger("Minecraft");
     protected static OresomeAchievements plugin;
-    public ArrayList<String> achs = new ArrayList<String>();
+    public ArrayList<String> achievements = new ArrayList<String>();
     public HashMap<String, String> criteria = new HashMap<String, String>();
 
     //SQL stuff, notouch.
@@ -43,22 +45,24 @@ public class OresomeAchievements extends JavaPlugin {
     public String storageDatabase = null;
     public static MySQL mysql;
 
-    //Cache and more SQL stuff
-    public static ArrayList<String> achInput = new ArrayList<String>();
+    //Cache
+    public static ArrayList<String> achievementInput = new ArrayList<String>();
     public boolean offlineMode = false;
+    private HashMap<String, AchievementPlayer> achievementPlayers = new HashMap<String, AchievementPlayer>();
 
-    //Player objects
-    private HashMap<String, AchievementPlayer> achPlayers = new HashMap<String, AchievementPlayer>();
-
-    public HashMap<String, AchievementPlayer> getAchievementPlayers() {
-        return achPlayers;
+    public OresomeAchievements() {
+        plugin = this;
     }
 
+    @Override
     public void onEnable() {
-        //Config stuff
+
         if (!(new File("plugin/OresomeAchievements/config.yml").isFile())) {
             saveDefaultConfig();
+            getConfig().options().header("OresomeAchievements - A Minecraft achievement plugin, designed for the OresomeCraft Network!");
         }
+
+        // SQL Connection
         storageType = getConfig().getString("database.type");
         storagePort = getConfig().getInt("database.port");
         storageHostname = getConfig().getString("database.hostname");
@@ -66,8 +70,6 @@ public class OresomeAchievements extends JavaPlugin {
         storagePassword = getConfig().getString("database.password");
         storageDatabase = "OresomeAchievements";
 
-
-        //SQL stuff
         mysql = new MySQL(logger,
                 "[AchievementsDB] ",
                 storageHostname,
@@ -88,20 +90,25 @@ public class OresomeAchievements extends JavaPlugin {
             cacheTimer();
         }
 
-        //Register commands
         registerCommands();
-
-        //Achievement instances
-        loadAchs();
+        loadAchievements();
 
         //Listener instances
         new AchievementListener(this);
         Bukkit.getPluginManager().callEvent(new ReadyAchievementsEvent());
     }
 
-    protected void loadAchs() {
-        //Make a protected
-        // method that loads the maps
+    @Override
+    public void onDisable() {
+
+        HandlerList.unregisterAll(this);
+
+        System.gc();
+        //Unsafe GC, remove if you want @Zachoz.
+    }
+
+    protected void loadAchievements() {
+
         new FistsOfFury();
         new Experienced();
         new WakeupCall();
@@ -131,46 +138,40 @@ public class OresomeAchievements extends JavaPlugin {
         }
     }
 
-    public OresomeAchievements() {
-        plugin = this;
-    }
-
-    public void onDisable() {
-        //SQL Stuff
-
-        //Unregister handlers
-        HandlerList.unregisterAll(this);
-
-        System.gc();
-        //Unsafe GC, remove if you want @Zachoz.
-    }
-
     public static OresomeAchievements getInstance() {
         return plugin;
     }
 
     public static void addAchievement(String name) {
-        plugin.achs.add(name);
+        plugin.achievements.add(name);
     }
 
     public static void addCriteria(String name, String criteria) {
         plugin.criteria.put(name, criteria);
     }
 
-    /* this will push all cached stuff every 10 seconds */
+    public HashMap<String, AchievementPlayer> getAchievementPlayers() {
+        return achievementPlayers;
+    }
+
+    public static void awardPoints(Player p, int points) {
+        //Code to award OresomeCraft Points (BattlePoints) on fulfilling a mission.
+    }
+
+    // This will push all cached input every 10 seconds
     public synchronized void cacheTimer() {
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             public synchronized void run() {
-                if(achInput.size() <= 0) return;
+                if (achievementInput.size() <= 0) return;
                 mysql.open();
-                while (achInput.size() > 0) {
-                    String s = achInput.get(0);
+                while (achievementInput.size() > 0) {
+                    String s = achievementInput.get(0);
                     try {
                         mysql.query(s);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    achInput.remove(0);
+                    achievementInput.remove(0);
                 }
                 mysql.close();
             }

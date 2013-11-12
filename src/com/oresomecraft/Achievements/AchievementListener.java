@@ -83,7 +83,7 @@ public class AchievementListener implements Listener {
         if (type == OAType.INCREMENTAL) {
             player.sendMessage(ChatColor.DARK_AQUA + "Amount: " + ChatColor.AQUA + increment);
         }
-        Access.awardPoints(player, reward);
+        OresomeAchievements.awardPoints(player, reward);
         player.sendMessage(ChatColor.GREEN + "You were awarded " + reward + " points!");
         player.sendMessage(ChatColor.YELLOW + "###################################");
     }

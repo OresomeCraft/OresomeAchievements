@@ -365,7 +365,7 @@ public class Select implements Builder {
     }
 
 	/*private void setColumns(String columns) throws DatabaseException {
-		if (columns == null || columns.isEmpty())
+        if (columns == null || columns.isEmpty())
 			throw new DatabaseException("String columns cannot be null or empty in SELECT query.");
 		
 		if (columns.contains(",")) {

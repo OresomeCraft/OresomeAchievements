@@ -39,5 +39,4 @@ public class LeanMeanKillingMachine extends OAchievement implements IOAchievemen
         }
     }
 
-
 }

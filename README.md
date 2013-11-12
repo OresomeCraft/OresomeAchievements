@@ -17,6 +17,7 @@ Users with push and pull access to this repo are:
 * [psgs](https://github.com/psgs)
 
 ### Changelog
+
  Version 1.0
  - User per-config YMLs
  - Give all achievements the OAchievement object

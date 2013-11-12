@@ -69,7 +69,7 @@ public class AchievementPlayer extends CraftPlayer {
     }
 
 
-    // *********** Deprecated shit thanks to Bukkit's overmapped thing ***********
+    // *********** Deprecated thanks to Bukkit's overmapped thing ***********
 
     public double getLastDamage() {
         return super.getLastDamage();

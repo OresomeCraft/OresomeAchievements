@@ -11,9 +11,8 @@ public class SQLAccess {
     public static OresomeAchievements plugin = OresomeAchievements.getInstance();
 
     /**
-     * Create the SQL tables if they don't already exist.
+     *  Created SQL Tables if they don't already exist
      */
-
     public static synchronized void createTables() {
         if (OresomeAchievements.getInstance().offlineMode) return;
 
@@ -48,8 +47,8 @@ public class SQLAccess {
     public static synchronized void logComplete(String name, String achievement) {
         if (OresomeAchievements.getInstance().offlineMode) return;
 
-        synchronized (OresomeAchievements.achInput) {
-            OresomeAchievements.achInput.add("INSERT INTO complete (name, achievement) VALUES ('" + name + "', '" + achievement + "')");
+        synchronized (OresomeAchievements.achievementInput) {
+            OresomeAchievements.achievementInput.add("INSERT INTO complete (name, achievement) VALUES ('" + name + "', '" + achievement + "')");
         }
     }
 

@@ -57,11 +57,11 @@ public abstract class OAchievement implements Listener {
     }
 
     private static void addAchievement(String name) {
-        Access.addAchievement(name);
+        OresomeAchievements.addAchievement(name);
     }
 
     private static void addCriteria(String name, String criteria) {
-        Access.addCriteria(name, criteria);
+        OresomeAchievements.addCriteria(name, criteria);
     }
 
 }
