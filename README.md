@@ -12,7 +12,7 @@ If you can code, you're welcome to have a go at coding an achievement or making 
 Users with push and pull access to this repo are:
 
 * [Zachoz](https://github.com/Zachoz)
-* [_Husky_](https://github.com/Huskehhh)
+* [\_Husky_](https://github.com/Huskehhh)
 * [R3creat3](https://github.com/R3creat3)
 * [psgs](https://github.com/psgs)
 
