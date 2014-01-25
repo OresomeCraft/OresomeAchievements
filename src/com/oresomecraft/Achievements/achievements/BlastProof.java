@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -9,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+@Achievement
 public class BlastProof extends OAchievement implements IOAchievement, Listener {
 
     public BlastProof() {
@@ -18,7 +20,7 @@ public class BlastProof extends OAchievement implements IOAchievement, Listener 
     //Objective details
     String name = "Blast Proof";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Survive an explosion, but take 7 hearts of damage!";
+    String criteria = "TNT can't blow me up!";
     int reward = 25;
 
     public void readyAchievement() {

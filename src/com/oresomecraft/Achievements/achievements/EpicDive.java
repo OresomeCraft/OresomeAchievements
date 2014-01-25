@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -10,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+@Achievement
 public class EpicDive extends OAchievement implements IOAchievement, Listener {
 
     public EpicDive() {
@@ -19,7 +21,7 @@ public class EpicDive extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "Epic Dive";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Survive a fall of a certain distance in water!";
+    String criteria = "Hey guys check out my highdive!";
     int reward = 15;
 
     public void readyAchievement() {

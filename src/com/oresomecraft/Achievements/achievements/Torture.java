@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -11,12 +12,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collection;
 
+@Achievement
 public class Torture extends OAchievement implements IOAchievement, Listener {
 
     //Objective details
     String name = "Torture";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Die whilst on fire and poisoned!";
+    String criteria = "I'm flaming up and I'm poisoned at the same time, help me!";
     int reward = 10;
 
     public Torture() {

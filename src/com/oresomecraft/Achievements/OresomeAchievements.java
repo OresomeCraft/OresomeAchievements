@@ -16,6 +16,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -47,7 +48,6 @@ public class OresomeAchievements extends JavaPlugin {
 
     //Cache
     public static ArrayList<String> achievementInput = new ArrayList<String>();
-    public boolean offlineMode = false;
     private HashMap<String, AchievementPlayer> achievementPlayers = new HashMap<String, AchievementPlayer>();
 
     public OresomeAchievements() {
@@ -80,14 +80,10 @@ public class OresomeAchievements extends JavaPlugin {
         if (mysql.open()) {
             System.out.println("MySQL connected successfully!");
             SQLAccess.createTables();
-            offlineMode = true;
             mysql.close();
-        } else {
-            System.out.println("We couldn't connect to the SQL, offline mode initiate!");
-            offlineMode = true;
-        }
-        if (offlineMode) {
             cacheTimer();
+        } else {
+            System.out.println("We couldn't connect to the SQL!");
         }
 
         registerCommands();
@@ -108,33 +104,13 @@ public class OresomeAchievements extends JavaPlugin {
     }
 
     protected void loadAchievements() {
-
-        new FistsOfFury();
-        new Experienced();
-        new WakeupCall();
-        new AnvilFalling();
-        new Nimble();
-        new OverPowered();
-        new MillionVolts();
-        new BlastProof();
-        new Torture();
-        new N00k();
-        new Manipulator();
-        new AdminYet();
-        new Cursed();
-        new GlitchingII();
-        new Ranked();
-        new Overkill();
-        new Reckless();
-        new GoneFishin();
-        new Sturdy();
-        new SniperPractice();
-        new EpicDive();
-
-        if (Bukkit.getPluginManager().getPlugin("OresomeBattles") != null) {
-            new LeanMeanKillingMachine();
-            new BigStreak();
-            new GlitchingI();
+        Reflections ref = new Reflections("com.oresomecraft.Achievements.achievements");
+        for (Class clazz : ref.getTypesAnnotatedWith(Achievement.class)) {
+            try {
+                clazz.newInstance();
+            } catch (Exception e) {
+                System.out.println("Couldn't load " + clazz.getName());
+            }
         }
     }
 
@@ -155,7 +131,7 @@ public class OresomeAchievements extends JavaPlugin {
     }
 
     public static void awardPoints(Player p, int points) {
-        //Code to award OresomeCraft Points (BattlePoints) on fulfilling a mission.
+        //Code to award OresomeCoins, dud
     }
 
     // This will push all cached input every 10 seconds

@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -8,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+@Achievement
 public class Cursed extends OAchievement implements IOAchievement, Listener {
 
     public Cursed() {
@@ -17,7 +19,7 @@ public class Cursed extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "Cursed";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Get killed by magic!";
+    String criteria = "Damage potions are more harmful than they seem!";
     int reward = 10;
 
     public void readyAchievement() {

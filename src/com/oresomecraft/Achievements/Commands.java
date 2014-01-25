@@ -26,7 +26,6 @@ public class Commands {
             usage = "<page>",
             min = 0,
             max = 1)
-    @CommandPermissions({"oresomeachievements.list"})
     public void goals(CommandContext args, CommandSender sender) throws SQLException {
         int page = 1;
         if (args.argsLength() == 1) {
@@ -44,7 +43,7 @@ public class Commands {
         boolean stopCheck = false;
         while (i < maxPage && !stopCheck) {
             try {
-                sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achs.get(i));
+                sender.sendMessage(ChatColor.DARK_AQUA + "- " + ChatColor.AQUA + plugin.achievements.get(i));
                 i++;
             } catch (IndexOutOfBoundsException e) {
                 sender.sendMessage(ChatColor.RED + "No further achievements found.");
@@ -59,53 +58,39 @@ public class Commands {
             desc = "View an achievement's info",
             usage = "<achievement>",
             min = 1)
-    @CommandPermissions({"oresomeachievements.goalinfo"})
     public void goalInfo(CommandContext args, CommandSender sender) {
         String arg = args.getJoinedStrings(0);
-        if (!(plugin.achs.contains(arg))) {
+        
+        if (matchAchievement(arg).equals("None")) {
             sender.sendMessage(ChatColor.RED + "That achievement doesn't exist!");
             return;
         }
-        for (Map.Entry<String, String> entry : plugin.criteria.entrySet()) {
-            if (entry.getKey().equals(arg)) {
-                AchievementPlayer ap = AchievementPlayer.getAchievementPlayer(sender.getName());
-                List<String> list = ap.getCompletedAchievements();
-                String yesorno = ChatColor.RED + "Incomplete";
-                if (list.contains(entry.getKey())) {
-                    yesorno = ChatColor.GREEN + "Complete";
-                }
-                sender.sendMessage(ChatColor.DARK_AQUA + "Information about " + ChatColor.AQUA + entry.getKey());
-                sender.sendMessage(ChatColor.DARK_AQUA + "Criteria: " + ChatColor.AQUA + entry.getValue());
-                sender.sendMessage(ChatColor.DARK_AQUA + "Completed: " + yesorno);
-            }
+        String ach = matchAchievement(arg);
+        AchievementPlayer ap = AchievementPlayer.getAchievementPlayer(sender.getName());
+        List<String> list = ap.getCompletedAchievements();
+        String yesorno = ChatColor.RED + "Incomplete";
+        if (list.contains(ach)) {
+            yesorno = ChatColor.GREEN + "Complete";
         }
+        sender.sendMessage(ChatColor.DARK_AQUA + "Information about " + ChatColor.AQUA + ach);
+        sender.sendMessage(ChatColor.DARK_AQUA + "Details: " + ChatColor.AQUA + OresomeAchievements.getInstance().criteria.get(ach));
+        sender.sendMessage(ChatColor.DARK_AQUA + "Completed: " + yesorno);
+
     }
 
     @Command(aliases = {"oresomeachievements", "oac", "oresomegoals"},
             desc = "Various OresomeAchievement commands",
-            usage = "<reset/info/reload>",
+            usage = "<info/reload>",
             min = 1)
+    @CommandPermissions({"oresomeachievements.staff"})
     public void oac(CommandContext args, CommandSender sender) {
         String arg = args.getString(0);
         if (arg.equalsIgnoreCase("info") && args.argsLength() == 1) {
             sender.sendMessage(ChatColor.AQUA + "OresomeAchievements version " + plugin.getDescription().getVersion());
-            sender.sendMessage(ChatColor.AQUA + "By R3creat3 and OresomeCraft");
+            sender.sendMessage(ChatColor.AQUA + "By __R3 and OresomeCraft");
         } else if (arg.equalsIgnoreCase("reload") && sender.hasPermission("oresomeachievements.reload") && args.argsLength() == 1) {
             //Nothing happens, just for perfectionism.
             sender.sendMessage(ChatColor.AQUA + "OresomeAchievements reloaded");
-        } else if (arg.equalsIgnoreCase("reset") && args.argsLength() == 2 && sender.hasPermission("oresomeachievements.reset")) {
-            if (new File("plugins/OresomeAchievements/users", args.getString(1) + ".yml").isFile()) {
-                File file = new File("plugins/OresomeAchievements/users", args.getString(1) + ".yml");
-                file.delete();
-                sender.sendMessage(ChatColor.AQUA + "User's configuration was deleted!");
-                if (Bukkit.getPlayer(args.getString(1)) != null) {
-                    Bukkit.getPlayer(args.getString(1)).kickPlayer(ChatColor.RED + "Your configuration was reset, relogin!");
-                }
-            } else {
-                sender.sendMessage(ChatColor.RED + "That user has not been seen before!");
-            }
-        } else {
-            sender.sendMessage(ChatColor.RED + "/oresomeachievements <reset/info/reload>");
         }
     }
 
@@ -117,7 +102,7 @@ public class Commands {
     //This is used primarily for testing new achievements or restoring lost achievements. Don't be an idiot and abuse it.
     public void achForce(CommandContext args, CommandSender sender) {
         String arg = args.getJoinedStrings(0);
-        if (plugin.achs.contains(arg)) {
+        if (matchAchievement(arg).equals("None")) {
             for (Map.Entry<String, String> entry : plugin.criteria.entrySet()) {
                 if (entry.getKey().equals(arg)) {
                     Bukkit.getPluginManager().callEvent(new AchievementFulfilEvent((Player) sender, arg, 0, entry.getValue(), 0, OAType.FORCED));
@@ -133,8 +118,19 @@ public class Commands {
             usage = "<query>",
             flags = "e",
             min = 1)
-    @CommandPermissions({"oresomeachievements.goalinfo"})
+    @CommandPermissions({"oresomeachievements.query"})
     public void query(CommandContext args, CommandSender sender) {
         //Will do later
+        sender.sendMessage(ChatColor.RED + "Disabled at the moment.");
+    }
+
+    private String matchAchievement(String ach) {
+        for (String s : OresomeAchievements.getInstance().achievements) {
+            String temp = s;
+            if (s.toLowerCase().startsWith(ach.toLowerCase())) {
+                return temp;
+            }
+        }
+        return "None";
     }
 }

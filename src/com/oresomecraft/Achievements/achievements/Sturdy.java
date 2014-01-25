@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -8,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+@Achievement
 public class Sturdy extends OAchievement implements IOAchievement, Listener {
 
     public Sturdy() {
@@ -17,7 +19,7 @@ public class Sturdy extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "Sturdy";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Kill a player whilst on half a heart!";
+    String criteria = "Prove your strength and kill your enemy with half a heart left!";
     int reward = 10;
 
     public void readyAchievement() {

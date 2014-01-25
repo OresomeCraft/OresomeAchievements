@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -8,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+@Achievement
 public class Overkill extends OAchievement implements IOAchievement, Listener {
 
     public Overkill() {
@@ -17,7 +19,7 @@ public class Overkill extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "Overkill";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Deal an extremely large amount of damage to an entity!";
+    String criteria = "How can you even deal that much damage?!";
     int reward = 10;
 
     public void readyAchievement() {

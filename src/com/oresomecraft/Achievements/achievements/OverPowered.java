@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -11,6 +12,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 
 import java.util.Map;
 
+@Achievement
 public class OverPowered extends OAchievement implements IOAchievement, Listener {
 
     public OverPowered() {
@@ -20,7 +22,7 @@ public class OverPowered extends OAchievement implements IOAchievement, Listener
     //Objective details
     String name = "Over Powered";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Can you get a sharpness II fire aspect I sword?";
+    String criteria = "Sharpness II and Fire Aspect I?";
     int reward = 15;
 
     public void readyAchievement() {

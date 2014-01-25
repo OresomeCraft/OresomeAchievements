@@ -11,10 +11,9 @@ public class SQLAccess {
     public static OresomeAchievements plugin = OresomeAchievements.getInstance();
 
     /**
-     *  Created SQL Tables if they don't already exist
+     * Created SQL Tables if they don't already exist
      */
     public static synchronized void createTables() {
-        if (OresomeAchievements.getInstance().offlineMode) return;
 
         MySQL mysql = new MySQL(plugin.logger,
                 "[AchievementsDB] ",
@@ -45,7 +44,6 @@ public class SQLAccess {
      */
 
     public static synchronized void logComplete(String name, String achievement) {
-        if (OresomeAchievements.getInstance().offlineMode) return;
 
         synchronized (OresomeAchievements.achievementInput) {
             OresomeAchievements.achievementInput.add("INSERT INTO complete (name, achievement) VALUES ('" + name + "', '" + achievement + "')");
@@ -58,7 +56,6 @@ public class SQLAccess {
 
     public static synchronized ArrayList<String> getCompleted(String name) throws SQLException {
         ArrayList<String> cache = new ArrayList<String>();
-        if (OresomeAchievements.getInstance().offlineMode) return cache;
 
         MySQL mysql = new MySQL(plugin.logger,
                 "[AchievementsDB] ",

@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -9,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+@Achievement
 public class FistsOfFury extends OAchievement implements IOAchievement, Listener {
 
     public FistsOfFury() {
@@ -18,7 +20,7 @@ public class FistsOfFury extends OAchievement implements IOAchievement, Listener
     //Objective details
     String name = "Fists of Fury";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Kill another player with your fists!";
+    String criteria = "Taste my fists, bitch!";
     int reward = 20;
 
     public void readyAchievement() {

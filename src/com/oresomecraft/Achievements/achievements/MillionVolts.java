@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -9,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+@Achievement
 public class MillionVolts extends OAchievement implements IOAchievement, Listener {
 
     public MillionVolts() {
@@ -18,7 +20,7 @@ public class MillionVolts extends OAchievement implements IOAchievement, Listene
     //Objective details
     String name = "Million Volts";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Get struck by lightning!";
+    String criteria = "Out of all the places it could've struck...";
     int reward = 25;
 
     public void readyAchievement() {

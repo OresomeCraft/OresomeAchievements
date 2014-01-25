@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -8,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+@Achievement
 public class AnvilFalling extends OAchievement implements IOAchievement, Listener {
 
     public AnvilFalling() {
@@ -17,7 +19,7 @@ public class AnvilFalling extends OAchievement implements IOAchievement, Listene
     //Objective details
     String name = "Anvil Falling";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Die from 200+ blocks fall damage!";
+    String criteria = "How far can you fall?";
     int reward = 5;
 
     public void readyAchievement() {

@@ -1,8 +1,8 @@
 package com.oresomecraft.Achievements;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_6_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R1.CraftServer;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -62,10 +62,6 @@ public class AchievementPlayer extends CraftPlayer {
     public static void craftAchievementPlayer(Player p) {
         AchievementPlayer ap = new AchievementPlayer(p);
         OresomeAchievements.getInstance().getAchievementPlayers().put(p.getName(), ap);
-    }
-
-    public boolean hasPermisson(String perm) {
-        return Bukkit.getPlayer(getName()).hasPermission(perm);
     }
 
 

@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -7,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 
+@Achievement
 public class GoneFishin extends OAchievement implements IOAchievement, Listener {
 
     public GoneFishin() {
@@ -16,7 +18,7 @@ public class GoneFishin extends OAchievement implements IOAchievement, Listener 
     //Objective details
     String name = "Gone Fishin'";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Catch a fish!";
+    String criteria = "Do I even need to explain?";
     int reward = 5;
 
     public void readyAchievement() {

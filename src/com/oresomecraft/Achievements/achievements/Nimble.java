@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -8,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+@Achievement
 public class Nimble extends OAchievement implements IOAchievement, Listener {
 
     public Nimble() {
@@ -17,7 +19,7 @@ public class Nimble extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "Nimble";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Die from less than 4 blocks fall damage!";
+    String criteria = "Oh come on it wasn't even that big of a fall!";
     int reward = 10;
 
     public void readyAchievement() {

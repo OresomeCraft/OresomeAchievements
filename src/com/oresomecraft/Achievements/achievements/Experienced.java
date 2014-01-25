@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -7,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
 
+@Achievement
 public class Experienced extends OAchievement implements IOAchievement, Listener {
 
     public Experienced() {
@@ -16,7 +18,7 @@ public class Experienced extends OAchievement implements IOAchievement, Listener
     //Objective details
     String name = "Experienced";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Get 30 levels of EXP on any map!";
+    String criteria = "Getting to level 30 in a single map? Impressive!";
     int reward = 20;
 
     public void readyAchievement() {

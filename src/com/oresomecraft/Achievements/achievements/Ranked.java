@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -7,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+@Achievement
 public class Ranked extends OAchievement implements IOAchievement, Listener {
 
     public Ranked() {
@@ -16,7 +18,7 @@ public class Ranked extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "#Rank";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Get a hashtag by donating, being staff or making a map, then speak!";
+    String criteria = "Get some extra swag by donating!";
     int reward = 10;
 
     public void readyAchievement() {

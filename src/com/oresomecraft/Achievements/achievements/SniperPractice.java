@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -7,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+@Achievement
 public class SniperPractice extends OAchievement implements IOAchievement, Listener {
 
     public SniperPractice() {
@@ -16,7 +18,7 @@ public class SniperPractice extends OAchievement implements IOAchievement, Liste
     //Objective details
     String name = "Sniper Practice";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Shoot and kill a player from over 40 blocks away!";
+    String criteria = "How far can you snipe?";
     int reward = 20;
 
     public void readyAchievement() {

@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -8,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
+@Achievement
 public class N00k extends OAchievement implements IOAchievement, Listener {
 
     public N00k() {
@@ -17,7 +19,7 @@ public class N00k extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "N00k";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Throw a spire nuke!";
+    String criteria = "Spire is deadly, 'nuff said.";
     int reward = 5;
 
     public void readyAchievement() {

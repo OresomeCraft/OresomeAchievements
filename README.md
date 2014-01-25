@@ -13,7 +13,7 @@ Users with push and pull access to this repo are:
 
 * [Zachoz](https://github.com/Zachoz)
 * [_Husky_](https://github.com/Huskehhh)
-* [R3creat3](https://github.com/R3creat3)
+* [__R3 (aka, AnomalousRei)](https://github.com/AnomalousRei)
 * [psgs](https://github.com/psgs)
 
 ### Changelog
@@ -23,6 +23,11 @@ Users with push and pull access to this repo are:
  - Give all achievements the OAchievement object
  - Use HashMaps for config objects
 
+ Version 2.0
+ - Various improvements
+ - SQL migration
+ - Reflections
+
 ### Compiling
 
 You must have Apache Maven installed to compile. (http://maven.apache.org)
@@ -31,4 +36,4 @@ to compile use the following command:
 
 ```mvn clean install```
 
-**Note:** This plugin can function on your own server!
+**Note:** This plugin can function on your own server, but it might not work!

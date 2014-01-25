@@ -35,7 +35,7 @@
                 </configuration>
             </plugin>
             <plugin>
-                <!-- Shade plugin: Used to include the needed stuff in the jar -->
+                <!-- Shade plugin: Used to include sk89q's command framework into the jar -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.0</version>
@@ -49,6 +49,8 @@
                             <artifactSet>
                                 <includes>
                                     <include>com.sk89q:sk89q-command-framework</include>
+                                    <include>org.reflections:reflections</include>
+                                    <include>javassist:javassist</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
@@ -61,7 +63,12 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.6.4-R0.1-SNAPSHOT</version>
+            <version>1.7.2-R0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.7.2-R0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -78,7 +85,17 @@
         <dependency>
             <groupId>com.oresomecraft</groupId>
             <artifactId>OresomeBattlesAPI</artifactId>
-            <version>1.0.1</version>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.9-RC1</version>
+        </dependency>
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.3</version>
         </dependency>
     </dependencies>
     <repositories>
@@ -91,7 +108,7 @@
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
     </repositories>
-    <description>Milestones and Achievements plugin that award battle points.</description>
+    <description>Milestones and Achievements plugin that award OresomeCoins.</description>
     <organization>
         <name>OresomeCraft</name>
         <url>http://oresomecraft.com/</url>

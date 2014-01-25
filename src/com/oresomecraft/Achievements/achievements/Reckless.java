@@ -1,5 +1,6 @@
 package com.oresomecraft.Achievements.achievements;
 
+import com.oresomecraft.Achievements.Achievement;
 import com.oresomecraft.Achievements.IOAchievement;
 import com.oresomecraft.Achievements.OAType;
 import com.oresomecraft.Achievements.OAchievement;
@@ -8,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 
+@Achievement
 public class Reckless extends OAchievement implements IOAchievement, Listener {
 
     public Reckless() {
@@ -17,7 +19,7 @@ public class Reckless extends OAchievement implements IOAchievement, Listener {
     //Objective details
     String name = "Reckless";
     OAType type = OAType.OBJECTIVE;
-    String criteria = "Get your vehicle destroyed!";
+    String criteria = "My brand new minecart is ruined!";
     int reward = 15;
 
     public void readyAchievement() {
