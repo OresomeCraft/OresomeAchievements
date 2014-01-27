@@ -7,10 +7,9 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-public class AchievementPlayer extends CraftPlayer {
+public class AchievementPlayer {
 
-    public AchievementPlayer(Player p) {
-        super((CraftServer) Bukkit.getServer(), ((CraftPlayer) p).getHandle());
+    public AchievementPlayer() {
     }
 
     // Local achievement stuff
@@ -19,14 +18,14 @@ public class AchievementPlayer extends CraftPlayer {
     /**
      * Add another achievement to the local cache
      */
-    public static void addNewAchievement(String achievement) {
+    public void addNewAchievement(String achievement) {
         completed.add(achievement);
     }
 
     /**
      * Get the player's list of completed achievements
      */
-    public static ArrayList<String> getCompletedAchievements() {
+    public ArrayList<String> getCompletedAchievements() {
         return completed;
     }
 
@@ -42,7 +41,7 @@ public class AchievementPlayer extends CraftPlayer {
      *
      * @param cache A list of completed achievements
      */
-    public static void setCompleted(ArrayList<String> cache) {
+    public void setCompleted(ArrayList<String> cache) {
         completed.clear();
         completed.addAll(cache);
     }
@@ -60,48 +59,7 @@ public class AchievementPlayer extends CraftPlayer {
      * @param p A Player
      */
     public static void craftAchievementPlayer(Player p) {
-        AchievementPlayer ap = new AchievementPlayer(p);
+        AchievementPlayer ap = new AchievementPlayer();
         OresomeAchievements.getInstance().getAchievementPlayers().put(p.getName(), ap);
     }
-
-
-    // *********** Deprecated thanks to Bukkit's overmapped thing ***********
-
-    public double getLastDamage() {
-        return super.getLastDamage();
-    }
-
-    public double getMaxHealth() {
-        return super.getMaxHealth();
-    }
-
-    public double getHealth() {
-        return super.getHealth();
-    }
-
-    @Deprecated
-    public void setMaxHealth(int amount) {
-        super.setMaxHealth((double) amount);
-    }
-
-    @Deprecated
-    public void setHealth(int amount) {
-        // This is a dud. Use setHealth(double)
-    }
-
-    @Deprecated
-    public void damage(int amount) {
-        super.damage((double) amount);
-    }
-
-    @Deprecated
-    public void damage(int amount, org.bukkit.entity.Entity entity) {
-        super.damage((double) amount, entity);
-    }
-
-    @Deprecated
-    public void setLastDamage(int amount) {
-        super.damage((double) amount);
-    }
-
 }

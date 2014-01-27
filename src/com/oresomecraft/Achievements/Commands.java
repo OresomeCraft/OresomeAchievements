@@ -60,7 +60,7 @@ public class Commands {
             min = 1)
     public void goalInfo(CommandContext args, CommandSender sender) {
         String arg = args.getJoinedStrings(0);
-        
+
         if (matchAchievement(arg).equals("None")) {
             sender.sendMessage(ChatColor.RED + "That achievement doesn't exist!");
             return;
