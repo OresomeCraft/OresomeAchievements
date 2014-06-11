@@ -108,7 +108,7 @@
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
     </repositories>
-    <description>Milestones and Achievements plugin that award OresomeCoins.</description>
+    <description>Milestones and achievements plugin that award OresomeCoins.</description>
     <organization>
         <name>OresomeCraft</name>
         <url>http://oresomecraft.com/</url>
@@ -117,7 +117,6 @@
         <system>GitHub</system>
         <url>https://github.com/OresomeCraft/OresomeAchievements/issues</url>
     </issueManagement>
-    <inceptionYear>2013-98-30</inceptionYear>
     <url>http://oresomecraft.com/</url>
-    <version>1.0</version>
+    <version>1.01</version>
 </project>
